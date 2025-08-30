@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Features from './components/Features';
@@ -11,12 +9,7 @@ import Customization from './components/Customization';
 import GoogleBuilt from './components/GoogleBuilt';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
-
-const AppContainer = styled.div`
-  font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-`;
+import './App.scss';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -90,25 +83,18 @@ function App() {
   }, []);
 
   return (
-    <AppContainer>
+    <div className="app-container">
       <Header 
         isMenuOpen={isMenuOpen} 
         setIsMenuOpen={setIsMenuOpen}
         activeSection={activeSection}
         scrollToSection={scrollToSection}
       />
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Mobile menu would go here */}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isMenuOpen && (
+        <div className="mobile-menu">
+          {/* Mobile menu would go here */}
+        </div>
+      )}
       <Hero id="hero" />
       <Features id="features" />
       <TabManagement id="tabs" />
@@ -118,7 +104,7 @@ function App() {
       <GoogleBuilt id="google-built" />
       <FAQ id="faq" />
       <Footer />
-    </AppContainer>
+    </div>
   );
 }
 

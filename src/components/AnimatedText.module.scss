@@ -1,0 +1,39 @@
+.textContainer {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(30px) scale(0.9);
+  will-change: transform, opacity;
+}
+
+.word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: transform, opacity;
+}
+
+// Animation classes for GSAP
+.hidden {
+  opacity: 0;
+  transform: translateY(30px) scale(0.9);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.wordHidden {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.wordVisible {
+  opacity: 1;
+  transform: translateY(0);
+}

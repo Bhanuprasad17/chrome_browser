@@ -1,22 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { useScrollAnimation } from '../utils/useScrollAnimation';
-import { scrollVariants, staggerDelays } from '../utils/scrollAnimations';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import styles from './AnimatedText.module.scss';
 
-const TextContainer = styled(motion.div)`
-  display: inline-block;
-  overflow: hidden;
-`;
-
-const Letter = styled(motion.span)`
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(30px) scale(0.9);
-  color: ${props => props.highlight ? '#1a73e8' : 'inherit'};
-  font-weight: ${props => props.highlight ? '600' : 'inherit'};
-  will-change: transform, opacity;
-`;
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
 const AnimatedText = ({ 
   text, 
@@ -27,101 +15,112 @@ const AnimatedText = ({
   fontWeight = 'inherit',
   animationType = 'letter'
 }) => {
-  const [ref, isVisible] = useScrollAnimation();
-  const letters = text.split('');
+  const containerRef = useRef(null);
+  const lettersRef = useRef([]);
+  const wordsRef = useRef([]);
 
-  const letterVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 30,
-      scale: 0.9,
-      transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (animationType === 'word' && text.length > 20) {
+        // Word animation
+        gsap.fromTo(wordsRef.current,
+          {
+            opacity: 0,
+            y: 20
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: staggerDelay,
+            delay: delay,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      } else {
+        // Letter animation
+        gsap.fromTo(lettersRef.current,
+          {
+            opacity: 0,
+            y: 30,
+            scale: 0.9
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            stagger: staggerDelay,
+            delay: delay,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
       }
-    },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        delay: delay + (i * staggerDelay),
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    })
-  };
+    }, containerRef);
 
-  // Word-by-word animation for longer texts
-  const wordVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 20,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: delay + (i * staggerDelays.words),
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    })
-  };
+    return () => ctx.revert();
+  }, [text, delay, staggerDelay, animationType]);
 
   if (animationType === 'word' && text.length > 20) {
     const words = text.split(' ');
     return (
-      <TextContainer
-        ref={ref}
-        initial="hidden"
-        animate={isVisible ? "visible" : "hidden"}
+      <span 
+        ref={containerRef}
+        className={styles.textContainer}
         style={{ fontSize, fontWeight }}
       >
         {words.map((word, index) => (
-          <motion.span
+          <span
             key={index}
-            custom={index}
-            variants={wordVariants}
+            ref={el => wordsRef.current[index] = el}
+            className={styles.word}
             style={{ 
-              display: 'inline-block',
+              color: highlight ? '#1a73e8' : 'inherit',
+              fontWeight: highlight ? '600' : fontWeight,
               marginRight: '0.3em',
               whiteSpace: 'nowrap'
             }}
           >
             {word}
-          </motion.span>
+          </span>
         ))}
-      </TextContainer>
+      </span>
     );
   }
 
+  const letters = text.split('');
   return (
-    <TextContainer
-      ref={ref}
-      initial="hidden"
-      animate={isVisible ? "visible" : "hidden"}
+    <span 
+      ref={containerRef}
+      className={styles.textContainer}
       style={{ fontSize, fontWeight }}
     >
       {letters.map((letter, index) => (
-        <Letter
+        <span
           key={index}
-          custom={index}
-          variants={letterVariants}
-          highlight={highlight}
+          ref={el => lettersRef.current[index] = el}
+          className={styles.letter}
           style={{ 
+            color: highlight ? '#1a73e8' : 'inherit',
+            fontWeight: highlight ? '600' : fontWeight,
             whiteSpace: letter === ' ' ? 'pre' : 'normal',
             marginRight: letter === ' ' ? '0.1em' : '0'
           }}
         >
           {letter}
-        </Letter>
+        </span>
       ))}
-    </TextContainer>
+    </span>
   );
 };
 
