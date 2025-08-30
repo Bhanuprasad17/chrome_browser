@@ -1,0 +1,172 @@
+.pageContainer {
+  font-family: 'Roboto', Arial, sans-serif;
+  color: #202124;
+  background-color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  width: 100%;
+  max-width: 1200px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #e8eaed;
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  z-index: 100;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  height: 24px;
+  width: 24px;
+}
+
+.logoText {
+  font-weight: 500;
+  font-size: 20px;
+  color: #202124;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+}
+
+.navLink {
+  font-size: 14px;
+  color: #3c4043;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.externalArrow {
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+.mainContent {
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  padding: 0 16px;
+}
+
+.mainLogo {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 24px;
+}
+
+.headline {
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+  margin-bottom: 24px;
+  color: #202124;
+}
+
+.downloadButton {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.downloadButton:hover {
+  background-color: #155ab6;
+}
+
+.downloadIcon {
+  font-size: 18px;
+}
+
+.updateLink {
+  color: #1a73e8;
+  font-size: 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.updateLink:hover {
+  text-decoration: underline;
+}
+
+.systemInfo {
+  font-size: 12px;
+  color: #5f6368;
+  margin-bottom: 24px;
+}
+
+.checkboxSection {
+  font-size: 12px;
+  color: #3c4043;
+  margin-bottom: 24px;
+  max-width: 400px;
+  text-align: left;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  margin-top: 3px;
+}
+
+.learnMore {
+  color: #1a73e8;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+.learnMore:hover {
+  text-decoration: underline;
+}
+
+.termsText {
+  font-size: 10px;
+  color: #5f6368;
+  max-width: 400px;
+  line-height: 1.4;
+}
+
+.link {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
