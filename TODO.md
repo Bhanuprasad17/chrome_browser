@@ -1,35 +1,23 @@
-# Chrome Clone Migration Plan
+# TODO - Add and Unify Animations Across Website Components
 
-## Phase 1: Dependency Updates ✅ COMPLETED
-- [x] Update package.json - remove styled-components and framer-motion
-- [x] Install GSAP and SASS dependencies
-- [x] Update Vite config for SCSS support
+## Steps:
 
-## Phase 2: SCSS Conversion ✅ IN PROGRESS
-- [x] Create SCSS module for Hero component
-- [x] Convert Hero.jsx to use SCSS modules
-- [x] Create SCSS module for Header component
-- [x] Convert Header.jsx to use SCSS modules
-- [x] Create SCSS module for AnimatedText component
-- [x] Convert AnimatedText.jsx to use SCSS modules and GSAP
-- [ ] Repeat for remaining 9 components
+1. Add entrance animations to `DownloadPage.jsx`
+   - Use Framer Motion for main elements (logo, headline, buttons, links)
+   - Use `AnimatedText` component for headline text animation
 
-## Phase 3: GSAP Animation Migration
-- [ ] Create GSAP animation utilities
-- [ ] Update useScrollAnimation hook for GSAP
-- [ ] Convert Hero animations to GSAP
-- [ ] Convert Header animations to GSAP
-- [ ] Repeat for all animated components
+2. Review and unify animations in existing components:
+   - `Hero.jsx`: Ensure GSAP animations are consistent in timing and easing
+   - `Header.jsx`: Review GSAP timeline for consistency
+   - `Features.jsx`: Review Framer Motion variants and timing
+   - `TabManagement.jsx`: Review Framer Motion variants and hover animations
 
-## Phase 4: State Management
-- [ ] Analyze prop drilling in components
-- [ ] Implement Context API if needed
-- [ ] Update App.jsx for global state
+3. Update styles if needed in corresponding `.module.scss` files for animation effects
 
-## Phase 5: Testing & Cleanup
-- [ ] Test all animations
-- [ ] Verify no prop drilling
-- [ ] Remove debug/test code
-- [ ] Final code cleanup
+4. Test the website locally for smoothness and performance of animations
 
-## Current Progress: Starting Phase 2 - SCSS Conversion
+5. Get user feedback and make adjustments if necessary
+
+---
+
+This plan will enhance the visual appeal and user experience by adding and unifying animations across the site.

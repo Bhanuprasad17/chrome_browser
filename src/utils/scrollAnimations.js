@@ -82,7 +82,15 @@ export const scrollVariants = {
 
   // Enhanced staggered container with Google Chrome timing
   staggerContainer: {
-    hidden: { opacity: 0 },
+    hidden: { 
+      opacity: 0,
+      transition: {
+        staggerChildren: 0.1,
+        staggerDirection: -1,
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    },
     visible: {
       opacity: 1,
       transition: {
@@ -199,6 +207,88 @@ export const scrollVariants = {
         ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
+  },
+
+  // New variants for better repeated animations
+  fadeInUpRepeated: {
+    hidden: { 
+      opacity: 0, 
+      y: 60,
+      scale: 0.9,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  },
+
+  // Smooth slide with less distance for repeated use
+  slideInSmooth: {
+    hidden: { 
+      opacity: 0, 
+      y: 40,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  },
+
+  // Gentle scale for repeated animations
+  scaleInGentle: {
+    hidden: { 
+      opacity: 0, 
+      scale: 0.9,
+      transition: {
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  },
+
+  // Text reveal optimized for repeated use
+  textReveal: {
+    hidden: { 
+      opacity: 0, 
+      y: 20,
+      transition: {
+        duration: 0.4,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
   }
 };
 
@@ -209,22 +299,59 @@ export const easing = {
   easeInOut: [0.83, 0, 0.17, 1],
   bounce: [0.68, -0.55, 0.265, 1.55],
   smooth: [0.4, 0, 0.2, 1],
-  chrome: [0.25, 0.46, 0.45, 0.94]
+  chrome: [0.25, 0.46, 0.45, 0.94],
+  // New easing for repeated animations
+  gentleBounce: [0.34, 1.56, 0.64, 1],
+  softEase: [0.16, 1, 0.3, 1],
+  quickEase: [0.25, 0.1, 0.25, 1]
 };
 
 // Animation durations matching Google Chrome
 export const durations = {
+  instant: 0.2,
   fast: 0.4,
-  normal: 0.8,
+  normal: 0.6,
+  medium: 0.8,
   slow: 1.2,
   slower: 1.6,
-  chrome: 0.8
+  chrome: 0.8,
+  // Optimized for repeated animations
+  repeated: 0.5,
+  gentle: 0.4
 };
 
 // Stagger delays for different animation types
 export const staggerDelays = {
-  letters: 0.08,
-  words: 0.15,
+  letters: 0.05,
+  words: 0.1,
+  items: 0.15,
   cards: 0.2,
-  sections: 0.3
+  sections: 0.3,
+  // New delays for repeated animations
+  quickLetters: 0.03,
+  smoothItems: 0.12
+};
+
+// Viewport configuration for better repeated animations
+export const viewportConfig = {
+  // Standard configuration
+  standard: {
+    threshold: 0.1,
+    margin: "0px 0px -50px 0px"
+  },
+  // For repeated animations
+  repeated: {
+    threshold: 0.2,
+    margin: "0px 0px -80px 0px"
+  },
+  // For quick triggers
+  quick: {
+    threshold: 0.05,
+    margin: "0px 0px -20px 0px"
+  },
+  // For delayed triggers
+  delayed: {
+    threshold: 0.3,
+    margin: "0px 0px -120px 0px"
+  }
 };

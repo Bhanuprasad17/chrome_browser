@@ -38,7 +38,7 @@ const AnimatedText = ({
             scrollTrigger: {
               trigger: containerRef.current,
               start: "top 80%",
-              toggleActions: "play none none reverse"
+              toggleActions: "play reverse play reverse"
             }
           }
         );
@@ -61,7 +61,7 @@ const AnimatedText = ({
             scrollTrigger: {
               trigger: containerRef.current,
               start: "top 80%",
-              toggleActions: "play none none reverse"
+              toggleActions: "play reverse play reverse"
             }
           }
         );

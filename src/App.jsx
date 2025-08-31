@@ -25,13 +25,25 @@ function App() {
   // Enhanced smooth scrolling to sections with fallback
   const scrollToSection = (sectionId) => {
     console.log('Scrolling to section:', sectionId); // Debug log
-    
+
     const element = document.getElementById(sectionId);
     if (element) {
-      // Calculate the target position accounting for the fixed header
-      const headerHeight = 80; // Approximate header height
-      const elementPosition = element.offsetTop - headerHeight;
-      
+      // Get the actual header height dynamically
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 80;
+
+      // Check if the section already has padding-top that accounts for header
+      const computedStyle = window.getComputedStyle(element);
+      const sectionPaddingTop = parseFloat(computedStyle.paddingTop) || 0;
+
+      // If section has significant padding-top (like hero), don't subtract header height again
+      const hasHeaderPadding = sectionPaddingTop > headerHeight * 0.8; // 80% of header height
+      const elementPosition = hasHeaderPadding
+        ? element.offsetTop
+        : element.offsetTop - headerHeight;
+
+      console.log('Header height:', headerHeight, 'Section padding-top:', sectionPaddingTop, 'Has header padding:', hasHeaderPadding);
+
       // Try smooth scrolling first
       try {
         window.scrollTo({
@@ -43,7 +55,7 @@ function App() {
         console.log('Smooth scrolling not supported, using fallback');
         window.scrollTo(0, elementPosition);
       }
-      
+
       console.log('Scrolled to:', sectionId, 'at position:', elementPosition);
     } else {
       console.error('Section not found:', sectionId);

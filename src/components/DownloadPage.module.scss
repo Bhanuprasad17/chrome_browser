@@ -80,10 +80,11 @@
   font-weight: 700;
   font-size: 48px;
   line-height: 56px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   color: #202124;
 }
 
+// Header download button (smaller)
 .downloadButton {
   background-color: #1a73e8;
   color: white;
@@ -96,7 +97,6 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 16px;
   transition: background-color 0.3s ease;
 }
 
@@ -104,8 +104,38 @@
   background-color: #155ab6;
 }
 
-.downloadIcon {
+// Main download button (larger and more prominent)
+.mainDownloadButton {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 32px;
+  padding: 16px 48px;
   font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+}
+
+.mainDownloadButton:hover {
+  background-color: #155ab6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(26, 115, 232, 0.4);
+}
+
+.mainDownloadButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+}
+
+.downloadIcon {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .updateLink {
