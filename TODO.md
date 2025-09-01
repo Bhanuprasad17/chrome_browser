@@ -1,12 +1,23 @@
-# COMPLETED: Add Scroll Animation to Header (Navbar)
+# Horizontal Carousel Implementation TODO
 
-## Steps:
-- [x] Import motion from framer-motion, useScrollAnimation, scrollVariants in Header.jsx
-- [x] Add const [ref, isVisible] = useScrollAnimation(); in Header component
-- [x] Change <header> to <motion.header ref={ref} initial="hidden" animate={isVisible ? "visible" : "hidden"} variants={scrollVariants.staggerContainer}>
-- [x] Add variants={scrollVariants.staggerItem} to the logo div
-- [x] Add variants={scrollVariants.staggerItem} to each navigation link (a tags)
-- [x] Add variants={scrollVariants.staggerItem} to the download button
-- [x] Remove the unused headerRef
-- [x] Remove the CSS animations since replaced by Framer Motion
-- [ ] Test the animation on page load
+## Completed Tasks
+- [x] Create HorizontalCarousel.jsx component with GSAP ScrollTrigger
+- [x] Implement horizontal scroll animation for 5 images
+- [x] Add GSAP ScrollTrigger plugin registration
+- [x] Use actual Chrome gallery images provided by user
+- [x] Import HorizontalCarousel in App.jsx
+- [x] Place HorizontalCarousel between Hero and Features components
+- [x] Set image height to 70% of viewport as requested
+- [x] Replace mock GSAP with real GSAP implementation
+- [x] Test the scroll animation functionality (server running on localhost:5174)
+
+## Followup Tasks
+- [ ] Check responsiveness on different screen sizes
+- [ ] Optimize performance if needed
+- [ ] Add loading states for images if required
+
+## Notes
+- GSAP is already installed (version 3.12.2)
+- Component uses ScrollTrigger for pinning and horizontal movement
+- Images are currently placeholders - update with actual content
+- Animation moves the wrapper -300vw to show all 4 images sequentially

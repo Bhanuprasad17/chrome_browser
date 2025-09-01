@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import HorizontalCarousel from './components/HorizontalCarousel';
 import Features from './components/Features';
 import TabManagement from './components/TabManagement';
 import AIInnovations from './components/AIInnovations';
@@ -122,6 +123,7 @@ function App() {
         )}
       </AnimatePresence>
       <Hero id="hero" />
+      <HorizontalCarousel />
       <Features id="features" />
       <TabManagement id="tabs" />
       <Safety id="safety" />
