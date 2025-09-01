@@ -43,7 +43,7 @@ const Hero = () => {
         </motion.span>
       </motion.h1>
       <motion.button
-        className={styles.downloadButton}
+        className={styles.primaryButton}
         variants={scrollVariants.staggerItem}
       >
         Download Chrome
