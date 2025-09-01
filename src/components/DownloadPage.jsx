@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useScrollAnimation } from '../utils/useScrollAnimation';
+import { scrollVariants } from '../utils/scrollAnimations';
 
 const DownloadPage = () => {
   const [isChecked, setIsChecked] = useState(true);
+  const [ref, isVisible] = useScrollAnimation();
 
   const styles = {
     pageContainer: {
@@ -132,20 +136,35 @@ const DownloadPage = () => {
 
   return (
     <div style={styles.pageContainer}>
-      <main style={styles.mainContent}>
-        <div style={styles.mainLogo}>
+      <motion.main
+        style={styles.mainContent}
+        ref={ref}
+        initial="hidden"
+        animate={isVisible ? "visible" : "hidden"}
+        variants={scrollVariants.staggerContainer}
+      >
+        <motion.div
+          style={styles.mainLogo}
+          variants={scrollVariants.staggerItem}
+        >
           <div style={styles.mainLogoInner}>
             <div style={styles.mainLogoInnerCircle}></div>
           </div>
-        </div>
-        
-        <h1 style={styles.headline}>
+        </motion.div>
+
+        <motion.h1
+          style={styles.headline}
+          variants={scrollVariants.staggerItem}
+        >
           The browser<br />
           built to be yours
-        </h1>
-        
-        <button 
+        </motion.h1>
+
+        <motion.button
           style={styles.mainDownloadButton}
+          variants={scrollVariants.staggerItem}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onMouseEnter={(e) => {
             e.target.style.backgroundColor = '#1557b0';
             e.target.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
@@ -157,55 +176,65 @@ const DownloadPage = () => {
         >
           <span style={styles.downloadIcon}>⬇</span>
           Download Chrome
-        </button>
-        
-        <a 
-          href="#" 
+        </motion.button>
+
+        <motion.a
+          href="#"
           style={styles.updateLink}
+          variants={scrollVariants.staggerItem}
           onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
           onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
         >
           I want to update Chrome
-        </a>
-        
-        <div style={styles.systemInfo}>
+        </motion.a>
+
+        <motion.div
+          style={styles.systemInfo}
+          variants={scrollVariants.staggerItem}
+        >
           For Windows 11/10 64-bit
-        </div>
-        
-        <div style={styles.checkboxSection}>
+        </motion.div>
+
+        <motion.div
+          style={styles.checkboxSection}
+          variants={scrollVariants.staggerItem}
+        >
           <label style={styles.checkboxLabel}>
-            <input 
-              type="checkbox" 
-              checked={isChecked} 
+            <input
+              type="checkbox"
+              checked={isChecked}
               onChange={(e) => setIsChecked(e.target.checked)}
               style={styles.checkbox}
             />
             <span>
-              Help make Google Chrome better by automatically sending usage statistics and crash reports to Google. <a 
-                href="#" 
+              Help make Google Chrome better by automatically sending usage statistics and crash reports to Google. <a
+                href="#"
                 style={styles.learnMore}
                 onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
                 onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
               >Learn more</a>
             </span>
           </label>
-        </div>
-        
-        <div style={styles.termsText}>
-          By downloading Chrome, you agree to the <a 
-            href="#" 
+        </motion.div>
+
+        <motion.div
+          style={styles.termsText}
+          variants={scrollVariants.staggerItem}
+        >
+          By downloading Chrome, you agree to the <a
+            href="#"
             style={styles.link}
             onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
             onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
           >Google Terms of Service</a> and{' '}
-          <a 
-            href="#" 
+          <a
+            href="#"
             style={styles.link}
             onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
             onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
           >Chrome and ChromeOS Additional Terms of Service</a>
-        </div>
-      </main>
+        </motion.div>
+      </motion.main>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useScrollAnimation } from '../utils/useScrollAnimation';
+import { scrollVariants } from '../utils/scrollAnimations';
 
 const Section = styled.section`
   padding: 6rem 2rem;
@@ -169,58 +171,36 @@ const WorkspaceIcon = styled.div`
   font-size: 1.2rem;
 `;
 
-const GoogleBuilt = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
+const GoogleBuilt = ({ id }) => {
+  const [ref, isVisible] = useScrollAnimation();
 
   return (
-    <Section>
+    <Section id={id} ref={ref}>
       <Container>
         <SectionTitle
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
+          animate={isVisible ? "visible" : "hidden"}
+          variants={scrollVariants.staggerContainer}
         >
           The browser built by Google
         </SectionTitle>
-        
+
         <FeaturesGrid
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
+          animate={isVisible ? "visible" : "hidden"}
+          variants={scrollVariants.staggerContainer}
         >
           <FeatureCard
             bgColor="#fef7e0"
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
               <FeatureTitle>Google AI</FeatureTitle>
               <FeatureHeading>Access AI superpowers while you browse</FeatureHeading>
               <FeatureDescription>
-                Google is integrating artificial intelligence to make our products more useful. 
-                We use AI for features like Search, Google Translate, and more, and we're 
+                Google is integrating artificial intelligence to make our products more useful.
+                We use AI for features like Search, Google Translate, and more, and we're
                 innovating new technologies responsibly.
               </FeatureDescription>
               <FeatureLink href="#">
@@ -239,15 +219,15 @@ const GoogleBuilt = () => {
 
           <FeatureCard
             bgColor="#fef7e0"
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
               <FeatureTitle>Google Search</FeatureTitle>
               <FeatureHeading>The search bar you love, built right in</FeatureHeading>
               <FeatureDescription>
-                Access a world of knowledge at your fingertips. Check the weather, 
-                solve math equations, and get instant search results, all contained 
+                Access a world of knowledge at your fingertips. Check the weather,
+                solve math equations, and get instant search results, all contained
                 inside your browser's address bar.
               </FeatureDescription>
               <FeatureLink href="#">
@@ -267,14 +247,14 @@ const GoogleBuilt = () => {
 
           <FeatureCard
             bgColor="white"
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
               <FeatureTitle>Google Workspace</FeatureTitle>
               <FeatureHeading>Get things done, with or without Wi-Fi</FeatureHeading>
               <FeatureDescription>
-                Get things done in Gmail, Google Docs, Google Slides, Google Sheets, 
+                Get things done in Gmail, Google Docs, Google Slides, Google Sheets,
                 Google Translate and Google Drive, even without an Internet connection.
               </FeatureDescription>
               <FeatureLink href="#">

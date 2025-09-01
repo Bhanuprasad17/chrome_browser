@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useScrollAnimation } from '../utils/useScrollAnimation';
+import { scrollVariants } from '../utils/scrollAnimations';
 
 const Section = styled.section`
   padding: 6rem 2rem;
@@ -218,49 +220,27 @@ const AutofillButton = styled.button`
   }
 `;
 
-const Customization = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
+const Customization = ({ id }) => {
+  const [ref, isVisible] = useScrollAnimation();
 
   return (
-    <Section>
+    <Section id={id} ref={ref}>
       <Container>
         <SectionTitle
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
+          animate={isVisible ? "visible" : "hidden"}
+          variants={scrollVariants.staggerContainer}
         >
           Make it yours and take it with you
         </SectionTitle>
         
         <FeaturesGrid
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
+          animate={isVisible ? "visible" : "hidden"}
+          variants={scrollVariants.staggerContainer}
         >
           <FeatureCard
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
@@ -292,7 +272,7 @@ const Customization = () => {
           </FeatureCard>
 
           <FeatureCard
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
@@ -317,7 +297,7 @@ const Customization = () => {
           </FeatureCard>
 
           <FeatureCard
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
@@ -351,4 +331,4 @@ const Customization = () => {
   );
 };
 
-export default Customization; 
+export default Customization;

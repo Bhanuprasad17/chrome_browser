@@ -1,7 +1,10 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useScrollAnimation } from '../utils/useScrollAnimation';
+import { scrollVariants } from '../utils/scrollAnimations';
 
 const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) => {
-  const headerRef = useRef(null);
+  const [ref, isVisible] = useScrollAnimation();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleMenu = useCallback(() => {
@@ -62,7 +65,6 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
     cursor: 'pointer',
     opacity: isScrolled ? 0 : 1,
     transform: 'translateX(0)',
-    animation: isScrolled ? 'none' : 'slideInLeft 0.8s ease-out',
     transition: 'opacity 0.3s ease'
   };
 
@@ -84,7 +86,6 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
     transition: 'all 0.3s ease',
     opacity: 1,
     transform: 'translateY(0) scale(1)',
-    animation: isScrolled ? 'none' : 'fadeInUp 0.8s ease-out',
     fontSize: isScrolled ? '0.9rem' : '1rem',
     whiteSpace: 'nowrap'
   };
@@ -108,139 +109,76 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
     cursor: 'pointer',
     transition: 'all 0.3s ease',
     opacity: isScrolled ? 0 : 1,
-    transform: 'translateY(0) scale(1)',
-    animation: isScrolled ? 'none' : 'bounceIn 0.9s ease-out 0.6s both'
-  };
-
-  const mobileMenuButtonStyles = {
-    display: 'none',
-    background: 'none',
-    border: 'none',
-    fontSize: '1.5rem',
-    cursor: 'pointer',
-    color: '#333'
+    transform: 'translateY(0) scale(1)'
   };
 
   return (
     <>
-      <style>{`
-        @keyframes slideInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(-25px) scale(0.9);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes bounceIn {
-          0% {
-            opacity: 0;
-            transform: translateY(10px) scale(0.8);
-          }
-          60% {
-            transform: translateY(-5px) scale(1.05);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        .nav-link:hover {
-          background-color: rgba(26, 115, 232, 0.1);
-          transform: translateY(-1px);
-          color: #1a73e8;
-        }
-
-        .download-button:hover {
-          background-color: #1557b0;
-          transform: translateY(-2px) scale(1.05);
-        }
-
-        @media (max-width: 768px) {
-          .mobile-menu-button {
-            display: block !important;
-          }
-          .navigation {
-            display: none !important;
-          }
-        }
-      `}</style>
-      <header style={headerStyles} ref={headerRef}>
+      <motion.header
+        style={headerStyles}
+        ref={ref}
+        initial="hidden"
+        animate={isVisible ? "visible" : "hidden"}
+        variants={scrollVariants.staggerContainer}
+      >
         <div style={headerContentStyles}>
-          <div 
+          <motion.div
             style={logoStyles}
             onClick={handleLogoClick}
+            variants={scrollVariants.staggerItem}
           >
             <span style={{ fontSize: '1.2rem' }}>🌐</span>
             Chrome
-          </div>
+          </motion.div>
           
           <nav style={navigationStyles} className="navigation">
-            <a
+            <motion.a
               className="nav-link"
               style={activeSection === 'safety' ? activeNavLinkStyles : navLinkStyles}
               href="#safety"
               onClick={(e) => handleNavClick(e, 'safety')}
+              variants={scrollVariants.staggerItem}
             >
               Safety
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               className="nav-link"
               style={activeSection === 'features' ? activeNavLinkStyles : navLinkStyles}
               href="#features"
               onClick={(e) => handleNavClick(e, 'features')}
+              variants={scrollVariants.staggerItem}
             >
               Features
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               className="nav-link"
               style={activeSection === 'customization' ? activeNavLinkStyles : navLinkStyles}
               href="#customization"
               onClick={(e) => handleNavClick(e, 'customization')}
+              variants={scrollVariants.staggerItem}
             >
               Customization
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               className="nav-link"
               style={activeSection === 'ai' ? activeNavLinkStyles : navLinkStyles}
               href="#ai"
               onClick={(e) => handleNavClick(e, 'ai')}
+              variants={scrollVariants.staggerItem}
             >
               AI
-            </a>
-            <button
+            </motion.a>
+            <motion.button
               className="download-button"
               style={downloadButtonStyles}
+              variants={scrollVariants.staggerItem}
             >
               <span>⬇</span>
               Download Chrome
-            </button>
+            </motion.button>
           </nav>
-          
-          <button 
-            className="mobile-menu-button"
-            style={mobileMenuButtonStyles}
-            onClick={toggleMenu}
-          >
-            {isMenuOpen ? '✕' : '☰'}
-          </button>
         </div>
-      </header>
+      </motion.header>
     </>
   );
 };

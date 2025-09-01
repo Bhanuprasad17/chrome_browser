@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useScrollAnimation } from '../utils/useScrollAnimation';
+import { scrollVariants } from '../utils/scrollAnimations';
 
 const Section = styled.section`
   padding: 6rem 2rem;
@@ -223,43 +225,22 @@ const GoogleLogo = styled.div`
   margin-top: auto;
 `;
 
-const Safety = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
+const Safety = ({ id }) => {
+  const [ref, isVisible] = useScrollAnimation();
 
   return (
-    <Section>
+    <Section id={id} ref={ref}>
       <Container>
         <SectionTitle
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
+          animate={isVisible ? "visible" : "hidden"}
+          variants={scrollVariants.staggerContainer}
         >
           Stay{' '}
           <SafetyHighlight
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+            variants={scrollVariants.scaleIn}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
             🛡️ safe
@@ -269,13 +250,12 @@ const Safety = () => {
         
         <FeaturesGrid
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
+          animate={isVisible ? "visible" : "hidden"}
+          variants={scrollVariants.staggerContainer}
         >
           <FeatureCard
             bgColor="#1a73e8"
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
@@ -306,7 +286,7 @@ const Safety = () => {
 
           <FeatureCard
             bgColor="white"
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
@@ -338,7 +318,7 @@ const Safety = () => {
 
           <FeatureCard
             bgColor="white"
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
@@ -357,7 +337,7 @@ const Safety = () => {
 
           <FeatureCard
             bgColor="#1a73e8"
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
@@ -376,4 +356,4 @@ const Safety = () => {
   );
 };
 
-export default Safety; 
+export default Safety;

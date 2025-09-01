@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useScrollAnimation } from '../utils/useScrollAnimation';
+import { scrollVariants } from '../utils/scrollAnimations';
 
 const Section = styled.section`
   padding: 6rem 2rem;
@@ -90,8 +92,9 @@ const FAQAnswer = styled(motion.div)`
   border-top: 1px solid #e8eaed;
 `;
 
-const FAQ = () => {
+const FAQ = ({ id }) => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [ref, isVisible] = useScrollAnimation();
 
   const faqs = [
     {
@@ -116,37 +119,15 @@ const FAQ = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    }
-  };
-
   const answerVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       height: 0,
       paddingTop: 0,
       paddingBottom: 0
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       height: "auto",
       paddingTop: "1.5rem",
       paddingBottom: "1.5rem",
@@ -158,27 +139,25 @@ const FAQ = () => {
   };
 
   return (
-    <Section>
+    <Section id={id} ref={ref}>
       <Container>
         <SectionTitle
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
+          animate={isVisible ? "visible" : "hidden"}
+          variants={scrollVariants.staggerContainer}
         >
           Frequently asked questions
         </SectionTitle>
-        
+
         <FAQList
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
+          animate={isVisible ? "visible" : "hidden"}
+          variants={scrollVariants.staggerContainer}
         >
           {faqs.map((faq, index) => (
             <FAQItem
               key={index}
-              variants={itemVariants}
+              variants={scrollVariants.staggerItem}
               whileHover={{ y: -2 }}
             >
               <FAQQuestion onClick={() => toggleFAQ(index)}>
@@ -190,7 +169,7 @@ const FAQ = () => {
                   {openIndex === index ? '×' : '+'}
                 </ExpandIcon>
               </FAQQuestion>
-              
+
               <AnimatePresence>
                 {openIndex === index && (
                   <FAQAnswer

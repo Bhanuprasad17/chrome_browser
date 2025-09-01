@@ -1,60 +1,40 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useScrollAnimation } from '../utils/useScrollAnimation';
+import { scrollVariants } from '../utils/scrollAnimations';
 import styles from './TabManagement.module.scss';
 
 const TabManagement = ({ id }) => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
+  const [ref, isVisible] = useScrollAnimation();
 
   return (
-    <section id={id} className={styles.section}>
+    <section id={id} className={styles.section} ref={ref}>
       <div className={styles.container}>
         <motion.h2
           className={styles.sectionTitle}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
+          animate={isVisible ? "visible" : "hidden"}
+          variants={scrollVariants.staggerContainer}
         >
           Extend your experience
         </motion.h2>
-        
+
         <motion.div
           className={styles.featuresGrid}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
+          animate={isVisible ? "visible" : "hidden"}
+          variants={scrollVariants.staggerContainer}
         >
           <motion.div
             className={styles.featureCard}
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
               <h3 className={styles.featureTitle}>Extend your experience</h3>
               <h4 className={styles.featureHeading}>From shopping and entertainment to productivity, find extensions to improve your experience</h4>
               <p className={styles.featureDescription}>
-                Discover powerful extensions in the Chrome Web Store that enhance your browsing experience, 
+                Discover powerful extensions in the Chrome Web Store that enhance your browsing experience,
                 boost productivity, and add new functionality to Chrome.
               </p>
               <a href="#" className={styles.featureLink}>
@@ -80,14 +60,14 @@ const TabManagement = ({ id }) => {
 
           <motion.div
             className={styles.featureCard}
-            variants={cardVariants}
+            variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
               <h3 className={styles.featureTitle}>Stay on top of tabs</h3>
               <h4 className={styles.featureHeading}>Chrome has tools to help you manage the tabs you're not quite ready to close</h4>
               <p className={styles.featureDescription}>
-                Group, label, and colour-code your tabs to stay organised and work faster. 
+                Group, label, and colour-code your tabs to stay organised and work faster.
                 Create tab groups for different projects or topics to keep your browsing organized.
               </p>
               <a href="#" className={styles.featureLink}>

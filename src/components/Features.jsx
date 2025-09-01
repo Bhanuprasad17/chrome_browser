@@ -1,15 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../utils/useScrollAnimation';
-import { scrollVariants, easing, staggerDelays } from '../utils/scrollAnimations';
-import AnimatedText from './AnimatedText';
+import { scrollVariants } from '../utils/scrollAnimations';
 import styles from './Features.module.scss';
 
-const Features = () => {
+const Features = ({ id }) => {
   const [ref, isVisible] = useScrollAnimation();
 
   return (
-    <section className={styles.section}>
+    <section id={id} className={styles.section}>
       <motion.div
         className={styles.container}
         ref={ref}
@@ -20,22 +19,26 @@ const Features = () => {
         <h2 className={styles.sectionTitle}>
           The{' '}
           <span className={styles.fastHighlight}>
-            ✓ <AnimatedText text="fast" delay={0.4} staggerDelay={staggerDelays.letters} />
+            ✓ fast
           </span>
           {' '}way to do things online
         </h2>
         
         <div className={styles.featuresGrid}>
-          <div className={styles.featureCard}>
+          <motion.div
+            className={styles.featureCard}
+            variants={scrollVariants.staggerItem}
+            whileHover={{ y: -8, transition: { duration: 0.3 } }}
+          >
             <div>
               <h3 className={styles.featureTitle}>
-                <AnimatedText text="Prioritise performance" delay={0.5} staggerDelay={staggerDelays.letters} />
+                Prioritise performance
               </h3>
               <h4 className={styles.featureHeading}>
-                <AnimatedText text="Chrome is built for performance" delay={0.6} staggerDelay={staggerDelays.letters} />
+                Chrome is fast and efficient
               </h4>
               <p className={styles.featureDescription}>
-                <AnimatedText text="Optimise your experience with features like Energy Saver and Memory Saver." delay={0.7} staggerDelay={staggerDelays.letters} />
+                Enjoy a smooth browsing experience with Energy Saver and Memory Saver features.
               </p>
               <a href="#" className={styles.featureLink}>
                 Learn more →
@@ -49,18 +52,22 @@ const Features = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className={styles.featureCard}>
+          <motion.div
+            className={styles.featureCard}
+            variants={scrollVariants.staggerItem}
+            whileHover={{ y: -8, transition: { duration: 0.3 } }}
+          >
             <div>
               <h3 className={styles.featureTitle}>
-                <AnimatedText text="Stay on top of tabs" delay={0.8} staggerDelay={staggerDelays.letters} />
+                Stay on top of tabs
               </h3>
               <h4 className={styles.featureHeading}>
-                <AnimatedText text="Chrome has tools to help you manage the tabs you're not quite ready to close" delay={0.9} staggerDelay={staggerDelays.letters} />
+                Chrome has tools to help you manage the tabs you're not quite ready to close
               </h4>
               <p className={styles.featureDescription}>
-                <AnimatedText text="Group, label, and colour-code your tabs to stay organised and work faster." delay={1.0} staggerDelay={staggerDelays.letters} />
+                Group, label, and colour-code your tabs to stay organized and work faster.
               </p>
               <a href="#" className={styles.featureLink}>
                 Learn more →
@@ -78,18 +85,22 @@ const Features = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className={styles.featureCard}>
+          <motion.div
+            className={styles.featureCard}
+            variants={scrollVariants.staggerItem}
+            whileHover={{ y: -8, transition: { duration: 0.3 } }}
+          >
             <div>
               <h3 className={styles.featureTitle}>
-                <AnimatedText text="Optimised for your device" delay={1.1} staggerDelay={staggerDelays.letters} />
+                Optimised for your device
               </h3>
               <h4 className={styles.featureHeading}>
-                <AnimatedText text="Chrome is built to work with your device across platforms" delay={1.2} staggerDelay={staggerDelays.letters} />
+                Chrome is built to work with your device across platforms
               </h4>
               <p className={styles.featureDescription}>
-                <AnimatedText text="That means a smooth experience on whatever you're working with." delay={1.3} staggerDelay={staggerDelays.letters} />
+                Chrome works smoothly on all your devices.
               </p>
               <a href="#" className={styles.featureLink}>
                 Get Chrome for your phone →
@@ -103,18 +114,22 @@ const Features = () => {
                 <div className={styles.deviceIcon}>📺</div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className={styles.featureCard}>
+          <motion.div
+            className={styles.featureCard}
+            variants={scrollVariants.staggerItem}
+            whileHover={{ y: -8, transition: { duration: 0.3 } }}
+          >
             <div>
               <h3 className={styles.featureTitle}>
-                <AnimatedText text="Automatic updates" delay={1.4} staggerDelay={staggerDelays.letters} />
+                Automatic updates
               </h3>
               <h4 className={styles.featureHeading}>
-                <AnimatedText text="There's a new Chrome update every four weeks" delay={1.5} staggerDelay={staggerDelays.letters} />
+                There's a new Chrome update every four weeks
               </h4>
               <p className={styles.featureDescription}>
-                <AnimatedText text="Making it easy to have the newest features and a faster, safer browser." delay={1.6} staggerDelay={staggerDelays.letters} />
+                Making it easy to have the newest features and a faster, safer browser.
               </p>
               <a href="#" className={styles.featureLink}>
                 Learn about automatic updates →
@@ -131,7 +146,7 @@ const Features = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </motion.div>
     </section>
@@ -139,3 +154,4 @@ const Features = () => {
 };
 
 export default Features;
+
