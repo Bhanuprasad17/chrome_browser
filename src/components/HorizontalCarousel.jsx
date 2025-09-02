@@ -5,7 +5,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const HorizontalCarousel = () => {
-  const [imageSize, setImageSize] = useState("w-[20vw] h-[20vh]");
   const containerRef = useRef(null);
   const wrapperRef = useRef(null);
   const cursorRef = useRef(null);
@@ -17,10 +16,13 @@ const HorizontalCarousel = () => {
 
     if (!container || !wrapper) return;
 
-    const imageElements = wrapper.querySelectorAll("img");
+    const images = wrapper.querySelectorAll("img");
     let loadedImages = 0;
 
     const setupScrollTrigger = () => {
+      const wrapperHeight = wrapper.offsetHeight;
+      const scrollDistance = wrapperHeight * 5; // adjust factor for scroll speed
+
       const totalScrollWidth = wrapper.scrollWidth - container.offsetWidth;
 
       gsap.to(wrapper, {
@@ -29,8 +31,8 @@ const HorizontalCarousel = () => {
         scrollTrigger: {
           trigger: container,
           start: "top top",
-          end: () => `+=${container.offsetWidth + totalScrollWidth}`,
-          scrub: 0.3, // ✅ Faster scroll response
+          end: `+=${scrollDistance}`,
+          scrub: 0.3,
           pin: true,
           anticipatePin: 1,
         },
@@ -39,12 +41,12 @@ const HorizontalCarousel = () => {
 
     const checkImagesLoaded = () => {
       loadedImages++;
-      if (loadedImages === imageElements.length) {
-        setTimeout(setupScrollTrigger, 100);
+      if (loadedImages === images.length) {
+        setTimeout(setupScrollTrigger, 50);
       }
     };
 
-    imageElements.forEach((img) => {
+    images.forEach((img) => {
       if (img.complete) {
         checkImagesLoaded();
       } else {
@@ -53,7 +55,7 @@ const HorizontalCarousel = () => {
       }
     });
 
-    if (imageElements.length === 0) {
+    if (images.length === 0) {
       setupScrollTrigger();
     }
 
@@ -90,38 +92,54 @@ const HorizontalCarousel = () => {
   }, []);
 
   const images = [
-    "https://www.google.com/chrome/static/images/dev-components/chrome-gallery-2-2x.webp",
-    "https://www.google.com/chrome/static/images/dev-components/chrome-gallery-5-2x.webp",
-    "https://www.google.com/chrome/static/images/dev-components/chrome-gallery-1-2x.webp",
-    "https://www.google.com/chrome/static/images/dev-components/chrome-gallery-4-2x.webp",
-    "https://www.google.com/chrome/static/images/dev-components/chrome-gallery-3-2x.webp",
+    {
+      src: "https://www.google.com/chrome/static/images/dev-components/chrome-gallery-2-2x.webp",
+      width: "220px",
+      height: "444px"
+    },
+    {
+      src: "https://www.google.com/chrome/static/images/dev-components/chrome-gallery-5-2x.webp",
+      width: "727px",
+      height: "444px"
+    },
+    {
+      src: "https://www.google.com/chrome/static/images/dev-components/chrome-gallery-1-2x.webp",
+      width: "727px",
+      height: "444px"
+    },
+    {
+      src: "https://www.google.com/chrome/static/images/dev-components/chrome-gallery-4-2x.webp",
+      width: "220px",
+      height: "444px"
+    },
+    {
+      src: "https://www.google.com/chrome/static/images/dev-components/chrome-gallery-3-2x.webp",
+      width: "727px",
+      height: "444px"
+    },
   ];
 
   return (
     <div
       ref={containerRef}
       className="w-full h-screen overflow-hidden relative cursor-none"
-      style={{ backgroundColor: "#f8f9fa" }}
     >
       {/* Custom cursor */}
       <div
         ref={cursorRef}
         className="fixed top-0 left-0 w-12 h-12 bg-blue-500 rounded-full pointer-events-none z-50 opacity-0 scale-0"
-        style={{
-          transform: "translate(-50%, -50%)",
-          mixBlendMode: "difference",
-        }}
+        style={{ transform: "translate(-50%, -50%)", mixBlendMode: "difference" }}
       />
 
       {/* Horizontal row of images */}
       <div
         ref={wrapperRef}
-        className="flex flex-nowrap items-center gap-8"
+        className="flex items-center gap-8"
         style={{
           width: "max-content",
-          height: "100%",
+          height: "auto",
           cursor: "grab",
-          padding: "0 2rem",
+          padding: "2rem",
           display: "flex",
           flexDirection: "row",
           flexWrap: "nowrap",
@@ -130,12 +148,15 @@ const HorizontalCarousel = () => {
         {images.map((image, index) => (
           <img
             key={index}
-            src={image}
+            src={image.src}
             alt={`Image ${index + 1}`}
-            className="w-[20vw] h-[20vh] flex-shrink-0 object-cover rounded-lg shadow-lg"
+            className="flex-shrink-0 object-cover rounded-lg shadow-lg"
+            style={{
+              width: image.width,
+              height: image.height
+            }}
             onError={(e) => {
-              e.target.src =
-                "https://via.placeholder.com/400x500?text=Image+Not+Found";
+              e.target.src = `https://via.placeholder.com/${image.width.replace('px','')}x${image.height.replace('px','')}?text=Image+Not+Found`;
             }}
             loading="lazy"
           />

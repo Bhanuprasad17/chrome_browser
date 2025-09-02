@@ -15,10 +15,18 @@ const TabManagement = ({ id }) => {
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
           variants={scrollVariants.staggerContainer}
+          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', fontWeight: '700' }}
         >
-          Extend your experience
+          Discover the latest&nbsp;
+          <span style={{ backgroundColor: '#dbe9ff', borderRadius: '1.5rem', padding: '0.25rem 1rem', display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#1a73e8', fontWeight: '700', fontSize: '1.2rem' }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#1a73e8" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 4a8 8 0 1 0 8 8h-2a6 6 0 1 1-6-6V4z"/>
+              <path d="M12 2v6l4 4-4 4v6a10 10 0 1 0-10-10h2a8 8 0 1 1 8-8z"/>
+            </svg>
+            updates
+          </span>
+          &nbsp;from Chrome
         </motion.h2>
-
         <motion.div
           className={styles.featuresGrid}
           initial="hidden"
@@ -29,32 +37,24 @@ const TabManagement = ({ id }) => {
             className={styles.featureCard}
             variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
+            style={{ backgroundColor: '#dbe9ff' }}
           >
-            <div>
-              <h3 className={styles.featureTitle}>Extend your experience</h3>
-              <h4 className={styles.featureHeading}>From shopping and entertainment to productivity, find extensions to improve your experience</h4>
+            <div style={{ paddingBottom: '1rem' }}>
+              <h4 className={styles.cardLabel}>UPDATES</h4>
+              <h3 className={styles.featureTitle}>Automatic updates</h3>
               <p className={styles.featureDescription}>
-                Discover powerful extensions in the Chrome Web Store that enhance your browsing experience,
-                boost productivity, and add new functionality to Chrome.
+                There’s a new Chrome release every four weeks, making it easy to have the newest features and a faster, safer web browser.
               </p>
               <a href="#" className={styles.featureLink}>
-                Explore extensions →
+                Learn about automatic updates
               </a>
             </div>
             <div className={styles.featureVisual}>
-              <div className={styles.browserWindow}>
-                <div className={styles.browserHeader}>
-                  <div className={styles.browserTab}>Chrome</div>
-                </div>
-                <div className={styles.browserContent}>G</div>
-                <div className={styles.extensionIcons}>
-                  <div className={styles.extensionIcon} style={{ backgroundColor: '#4285f4', top: '10px', right: '10px' }}>🛍️</div>
-                  <div className={styles.extensionIcon} style={{ backgroundColor: '#34a853', top: '60px', left: '10px' }}>📋</div>
-                  <div className={styles.extensionIcon} style={{ backgroundColor: '#fbbc05', bottom: '10px', left: '50px' }}>👤</div>
-                  <div className={styles.extensionIcon} style={{ backgroundColor: '#ea4335', bottom: '60px', right: '50px' }}>✏️</div>
-                  <div className={styles.extensionIcon} style={{ backgroundColor: '#9c27b0', top: '110px', right: '50px' }}>🏢</div>
-                </div>
-              </div>
+              <img
+                src="https://www.google.com/chrome/static/images/engagement-homepage/updates/updates.png"
+                alt="Automatic updates"
+                className={styles.cardImage}
+              />
             </div>
           </motion.div>
 
@@ -62,36 +62,24 @@ const TabManagement = ({ id }) => {
             className={styles.featureCard}
             variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
+            style={{ backgroundColor: '#fff6d6' }}
           >
             <div>
-              <h3 className={styles.featureTitle}>Stay on top of tabs</h3>
-              <h4 className={styles.featureHeading}>Chrome has tools to help you manage the tabs you're not quite ready to close</h4>
+              <h4 className={styles.cardLabel}>LATEST</h4>
+              <h3 className={styles.featureTitle}>New from Chrome</h3>
               <p className={styles.featureDescription}>
-                Group, label, and colour-code your tabs to stay organised and work faster.
-                Create tab groups for different projects or topics to keep your browsing organized.
+                Chrome regularly updates with tools and features that make it faster and easier to use.
               </p>
               <a href="#" className={styles.featureLink}>
-                Learn more →
+                Learn what’s new on Chrome &rarr;
               </a>
             </div>
             <div className={styles.featureVisual}>
-              <div className={styles.tabVisual}>
-                <div className={styles.tabGroupLabel}>Work</div>
-                <div className={styles.tabGroup}>
-                  <div className={`${styles.tab} ${styles.tabActive}`}>Gmail</div>
-                  <div className={styles.tab}>Docs</div>
-                  <div className={styles.tab}>Sheets</div>
-                </div>
-                <div className={styles.tabGroupLabel}>Research</div>
-                <div className={styles.tabGroup}>
-                  <div className={styles.tab}>Search</div>
-                  <div className={styles.tab}>News</div>
-                  <div className={styles.tab}>Maps</div>
-                </div>
-                <div className={styles.tabContent}>
-                  Tab groups help you organize your browsing
-                </div>
-              </div>
+              <img
+                src="https://www.google.com/chrome/static/images/dev-components/chrome-logo-2x.webp"
+                alt="New from Chrome"
+                className={styles.cardImage}
+              />
             </div>
           </motion.div>
         </motion.div>

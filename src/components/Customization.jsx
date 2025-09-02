@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../utils/useScrollAnimation';
@@ -10,321 +10,219 @@ const Section = styled.section`
 `;
 
 const Container = styled.div`
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 `;
 
 const SectionTitle = styled(motion.h2)`
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(2rem, 5vw, 2.5rem);
   font-weight: 700;
   color: #202124;
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   line-height: 1.2;
 `;
 
 const FeaturesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 3rem;
+  grid-template-columns: 1239px;
+  grid-template-rows: 260px 208px;
+  gap: 3rem 3rem 3rem 3rem;
   margin-bottom: 4rem;
+  position: relative;
+  z-index: 0;
+
+  @media(min-width: 768px) {
+    grid-template-columns: 595px 595px;
+    grid-template-rows: 208px;
+    gap: 3rem 1.5rem;
+  }
 `;
 
-const FeatureCard = styled(motion.div)`
-  background: white;
-  padding: 2.5rem;
-  border-radius: 16px;
-  position: relative;
-  overflow: hidden;
-  min-height: 350px;
+const TopCard = styled(motion.div)`
+  background-color: #fff4d6;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  align-items: flex-start;
+  gap: 1rem;
+  grid-column: 1 / -1;
+  width: 1239px;
+  height: 260px;
 `;
 
-const FeatureTitle = styled.h3`
-  font-size: 1.2rem;
+const BottomCard = styled(motion.div)`
+  background-color: ${props => props.bgColor || 'white'};
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 595px;
+  height: 208px;
+`;
+
+const CardText = styled.div`
+  font-size: 0.9rem;
+  color: #202124;
   font-weight: 600;
-  color: #5f6368;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 `;
 
-const FeatureHeading = styled.h4`
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #202124;
-  margin-bottom: 1rem;
-  line-height: 1.3;
+const CardHeading = styled.h3`
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 `;
 
-const FeatureDescription = styled.p`
-  font-size: 1rem;
+const CardDescription = styled.p`
+  font-size: 0.9rem;
   color: #5f6368;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   flex-grow: 1;
 `;
 
-const FeatureLink = styled.a`
+const CardLink = styled.a`
+  font-size: 0.9rem;
   color: #1a73e8;
   text-decoration: none;
   font-weight: 500;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  
+  gap: 0.3rem;
+
   &:hover {
-    color: #1557b0;
-    transform: translateX(4px);
+    text-decoration: underline;
   }
 `;
 
-const FeatureVisual = styled.div`
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const BrowserWindow = styled.div`
-  width: 280px;
-  height: 180px;
-  border: 1px solid #e8eaed;
+const CardImage = styled.img`
   border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  background: ${props => props.theme || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'};
+  margin-top: auto;
 `;
 
-const BrowserHeader = styled.div`
-  height: 30px;
-  background: rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  padding: 0 0.5rem;
-  gap: 0.5rem;
+const TopCardImage = styled(CardImage)`
+  width: 350px;
+  height: auto;
 `;
 
-const BrowserTab = styled.div`
-  width: 60px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px 4px 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  color: white;
+const BottomCardImage = styled(CardImage)`
+  width: 120px;
+  height: auto;
 `;
 
-const BrowserContent = styled.div`
-  height: calc(100% - 30px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const PlusButton = styled.button`
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: #1a73e8;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
   color: white;
   font-size: 1.5rem;
-  font-weight: bold;
-`;
-
-const ThemeGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  margin-top: 1rem;
-`;
-
-const ThemeOption = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  background: ${props => props.color};
-  border: 2px solid ${props => props.selected ? '#1a73e8' : 'transparent'};
   cursor: pointer;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: scale(1.1);
-  }
-`;
-
-const MobileVisual = styled.div`
-  width: 120px;
-  height: 200px;
-  border: 2px solid #e8eaed;
-  border-radius: 16px;
-  background: white;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const MobileIcon = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  background: #f8f9fa;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
-  color: #5f6368;
-`;
+  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.6);
+  transition: background-color 0.3s ease;
 
-const AutofillVisual = styled.div`
-  background: white;
-  border: 1px solid #e8eaed;
-  border-radius: 8px;
-  padding: 1rem;
-  min-width: 250px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-`;
-
-const FormField = styled.div`
-  margin-bottom: 1rem;
-`;
-
-const FormLabel = styled.div`
-  font-size: 0.8rem;
-  color: #5f6368;
-  margin-bottom: 0.25rem;
-`;
-
-const FormInput = styled.div`
-  padding: 0.5rem;
-  border: 1px solid #e8eaed;
-  border-radius: 4px;
-  background: #f8f9fa;
-  color: #202124;
-  font-size: 0.9rem;
-`;
-
-const AutofillButton = styled.button`
-  background: #1a73e8;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  margin-top: 0.5rem;
-  
   &:hover {
-    background: #1557b0;
+    background-color: #1557b0;
   }
 `;
 
 const Customization = ({ id }) => {
   const [ref, isVisible] = useScrollAnimation();
 
+  // State to toggle bottom cards content
+  const [bottomLeftExpanded, setBottomLeftExpanded] = useState(false);
+  const [bottomRightExpanded, setBottomRightExpanded] = useState(false);
+
   return (
     <Section id={id} ref={ref}>
       <Container>
         <SectionTitle
           initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
+          animate={isVisible ? 'visible' : 'hidden'}
           variants={scrollVariants.staggerContainer}
         >
-          Make it yours and take it with you
+          by Google
         </SectionTitle>
-        
+
         <FeaturesGrid
           initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
+          animate={isVisible ? 'visible' : 'hidden'}
           variants={scrollVariants.staggerContainer}
         >
-          <FeatureCard
+          <TopCard
             variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
-              <FeatureTitle>Customise your Chrome</FeatureTitle>
-              <FeatureHeading>Personalise your web browser with themes, dark mode and other options built just for you</FeatureHeading>
-              <FeatureLink href="#">
-                Explore themes →
-              </FeatureLink>
+              <CardText>Google AI</CardText>
+              <CardHeading>Access AI superpowers while you browse.</CardHeading>
+              <CardDescription>
+                Google is integrating artificial intelligence to make our products more useful. We use AI for features like Search, Google Translate, and more, and we're innovating new technologies responsibly.
+              </CardDescription>
+              <CardLink href="#">Explore Google AI &rarr;</CardLink>
             </div>
-            <FeatureVisual>
-              <BrowserWindow theme="linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
-                <BrowserHeader>
-                  <BrowserTab>Chrome</BrowserTab>
-                </BrowserHeader>
-                <BrowserContent>🌄</BrowserContent>
-              </BrowserWindow>
-              <ThemeGrid>
-                <ThemeOption color="#667eea" selected />
-                <ThemeOption color="#34a853" />
-                <ThemeOption color="#fbbc05" />
-                <ThemeOption color="#ea4335" />
-                <ThemeOption color="#9c27b0" />
-                <ThemeOption color="#ff9800" />
-                <ThemeOption color="#795548" />
-                <ThemeOption color="#607d8b" />
-                <ThemeOption color="#e91e63" />
-              </ThemeGrid>
-            </FeatureVisual>
-          </FeatureCard>
+            <TopCardImage src="https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google AI" />
+          </TopCard>
 
-          <FeatureCard
+          <BottomCard
+            bgColor="#fff4d6"
             variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
-              <FeatureTitle>Browse across devices</FeatureTitle>
-              <FeatureHeading>Sign in to Chrome on any device to access your bookmarks, saved passwords and more</FeatureHeading>
-              <FeatureLink href="#">
-                Learn more →
-              </FeatureLink>
+              <CardText>Google Search</CardText>
+              <CardHeading>The search bar you love, built right in.</CardHeading>
+              {!bottomLeftExpanded && (
+                <BottomCardImage src="https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google Search" />
+              )}
+              {bottomLeftExpanded && (
+                <CardDescription>
+                  Search faster and smarter with Google Search integrated directly into your browser.
+                </CardDescription>
+              )}
             </div>
-            <FeatureVisual>
-              <MobileVisual>
-                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🌐</div>
-                <MobileIcon>📧</MobileIcon>
-                <MobileIcon>🗺️</MobileIcon>
-                <MobileIcon>📱</MobileIcon>
-                <MobileIcon>⭐</MobileIcon>
-                <MobileIcon>📋</MobileIcon>
-                <MobileIcon>⬜</MobileIcon>
-                <MobileIcon>⏰</MobileIcon>
-              </MobileVisual>
-            </FeatureVisual>
-          </FeatureCard>
+            <PlusButton onClick={() => setBottomLeftExpanded(!bottomLeftExpanded)}>
+              {bottomLeftExpanded ? '✕' : '+'}
+            </PlusButton>
+          </BottomCard>
 
-          <FeatureCard
+          <BottomCard
+            bgColor="white"
             variants={scrollVariants.staggerItem}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
           >
             <div>
-              <FeatureTitle>Save time with autofill</FeatureTitle>
-              <FeatureHeading>Use Chrome to save addresses, passwords and more to quickly autofill your details</FeatureHeading>
-              <FeatureLink href="#">
-                Learn more →
-              </FeatureLink>
+              <CardText>Google Workspace</CardText>
+              <CardHeading>Get things done, with or without Wi-Fi.</CardHeading>
+              {!bottomRightExpanded && (
+                <BottomCardImage src="https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google Workspace" />
+              )}
+              {bottomRightExpanded && (
+                <CardDescription>
+                  Access your emails, documents, and files anywhere, anytime with Google Workspace.
+                </CardDescription>
+              )}
             </div>
-            <FeatureVisual>
-              <AutofillVisual>
-                <FormField>
-                  <FormLabel>Name</FormLabel>
-                  <FormInput>John Doe</FormInput>
-                </FormField>
-                <FormField>
-                  <FormLabel>Email</FormLabel>
-                  <FormInput>john.doe@example.com</FormInput>
-                </FormField>
-                <FormField>
-                  <FormLabel>Address</FormLabel>
-                  <FormInput>123 Main St, City, State</FormInput>
-                </FormField>
-                <AutofillButton>Use Saved Info</AutofillButton>
-              </AutofillVisual>
-            </FeatureVisual>
-          </FeatureCard>
+            <PlusButton onClick={() => setBottomRightExpanded(!bottomRightExpanded)}>
+              {bottomRightExpanded ? '✕' : '+'}
+            </PlusButton>
+          </BottomCard>
         </FeaturesGrid>
       </Container>
     </Section>

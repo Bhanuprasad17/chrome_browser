@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../utils/useScrollAnimation';
@@ -38,7 +38,8 @@ const SafetyHighlight = styled(motion.span)`
 
 const FeaturesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
   gap: 2rem;
   margin-top: 4rem;
 `;
@@ -225,8 +226,144 @@ const GoogleLogo = styled.div`
   margin-top: auto;
 `;
 
+const PlusButton = styled.button`
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: #1a73e8;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.6);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #1557b0;
+  }
+`;
+
 const Safety = ({ id }) => {
   const [ref, isVisible] = useScrollAnimation();
+
+  const originalCardTexts = [
+    {
+      title: "PASSWORD MANAGER",
+      heading: "Use strong passwords on every site",
+      description: null,
+      extraContent: (
+        <PasswordForm>
+          <FormField>
+            <FormInput>elisa.beckett</FormInput>
+          </FormField>
+          <FormField>
+            <FormInput>••••••••</FormInput>
+            <FormIcon>👁️</FormIcon>
+            <FormIcon>🔒</FormIcon>
+          </FormField>
+          <PasswordPrompt>
+            <PromptText>Use Saved Password?</PromptText>
+            <CloseButton>✕</CloseButton>
+          </PasswordPrompt>
+        </PasswordForm>
+      ),
+      status: (
+        <StatusIndicator>
+          <StatusDot />
+          <StatusText>On</StatusText>
+          <span>•••</span>
+          <span>→</span>
+        </StatusIndicator>
+      ),
+      expanded: false,
+    },
+    {
+      title: "SAFETY CHECK",
+      heading: "Check your safety level in real time with just one click",
+      description: (
+        <>
+          <SafetyCheckPopup>
+            <PopupHeader>🛡️ Safety check ran a moment ago</PopupHeader>
+            <CheckItem>
+              <CheckIcon>✓</CheckIcon>
+              Updates - Chrome is up to date
+            </CheckItem>
+            <CheckItem>
+              <InfoIcon>ℹ</InfoIcon>
+              Password Manager
+            </CheckItem>
+          </SafetyCheckPopup>
+          <FeatureDescription>
+            Chrome's Safety Check confirms the overall security and privacy of your browsing experience, 
+            including your saved passwords, extensions and settings. If something needs attention, 
+            Chrome will help you fix it.
+          </FeatureDescription>
+          <FeatureLink href="#">Learn more about safety on Chrome →</FeatureLink>
+        </>
+      ),
+      extraContent: null,
+      status: null,
+      expanded: false,
+    },
+    {
+      title: "ENHANCED SAFE BROWSING",
+      heading: "Browse with the confidence that you're staying safer online",
+      description: (
+        <>
+          Enhanced Safe Browsing provides additional protection by sharing real-time data with 
+          Google Safe Browsing to help identify and warn you about dangerous sites, downloads, 
+          and extensions.
+        </>
+      ),
+      extraContent: null,
+      status: null,
+      expanded: false,
+    },
+    {
+      title: "PRIVACY GUIDE",
+      heading: "Keep your privacy under your control with easy-to-use settings",
+      description: (
+        <>
+          Chrome makes it easy to understand exactly what you're sharing online and who you're 
+          sharing it with. Simply use the Privacy Guide, a step-by-step tour of your privacy settings.
+        </>
+      ),
+      extraContent: <GoogleLogo>G</GoogleLogo>,
+      status: null,
+      expanded: false,
+    }
+  ];
+
+  const [cardTexts, setCardTexts] = useState(originalCardTexts);
+
+  const handlePlusClick = (index) => {
+    setCardTexts(prevTexts => {
+      const newTexts = [...prevTexts];
+      newTexts[index].expanded = !newTexts[index].expanded;
+
+      if (newTexts[index].expanded) {
+        // Show image + text
+        newTexts[index].heading = "Text changed after clicking +";
+        newTexts[index].description = "This is the updated description text.";
+        newTexts[index].extraContent = (
+          <>
+            <GoogleLogo>✕</GoogleLogo>
+            <FeatureDescription>This is the updated description text with image + text.</FeatureDescription>
+          </>
+        );
+      } else {
+        // Restore original content
+        newTexts[index] = { ...originalCardTexts[index], expanded: false };
+      }
+      return newTexts;
+    });
+  };
 
   return (
     <Section id={id} ref={ref}>
@@ -247,109 +384,31 @@ const Safety = ({ id }) => {
           </SafetyHighlight>
           {' '}while you browse
         </SectionTitle>
-        
+
         <FeaturesGrid
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
           variants={scrollVariants.staggerContainer}
         >
-          <FeatureCard
-            bgColor="#1a73e8"
-            variants={scrollVariants.staggerItem}
-            whileHover={{ y: -8, transition: { duration: 0.3 } }}
-          >
-            <div>
-              <FeatureTitle>PASSWORD MANAGER</FeatureTitle>
-              <FeatureHeading>Use strong passwords on every site</FeatureHeading>
-              <PasswordForm>
-                <FormField>
-                  <FormInput>elisa.beckett</FormInput>
-                </FormField>
-                <FormField>
-                  <FormInput>••••••••</FormInput>
-                  <FormIcon>👁️</FormIcon>
-                  <FormIcon>🔒</FormIcon>
-                </FormField>
-                <PasswordPrompt>
-                  <PromptText>Use Saved Password?</PromptText>
-                  <CloseButton>✕</CloseButton>
-                </PasswordPrompt>
-              </PasswordForm>
-              <StatusIndicator>
-                <StatusDot />
-                <StatusText>On</StatusText>
-                <span>•••</span>
-                <span>→</span>
-              </StatusIndicator>
-            </div>
-          </FeatureCard>
-
-          <FeatureCard
-            bgColor="white"
-            variants={scrollVariants.staggerItem}
-            whileHover={{ y: -8, transition: { duration: 0.3 } }}
-          >
-            <div>
-              <FeatureTitle>SAFETY CHECK</FeatureTitle>
-              <FeatureHeading>Check your safety level in real time with just one click</FeatureHeading>
-              <SafetyCheckPopup>
-                <PopupHeader>
-                  🛡️ Safety check ran a moment ago
-                </PopupHeader>
-                <CheckItem>
-                  <CheckIcon>✓</CheckIcon>
-                  Updates - Chrome is up to date
-                </CheckItem>
-                <CheckItem>
-                  <InfoIcon>ℹ</InfoIcon>
-                  Password Manager
-                </CheckItem>
-              </SafetyCheckPopup>
-              <FeatureDescription>
-                Chrome's Safety Check confirms the overall security and privacy of your browsing experience, 
-                including your saved passwords, extensions and settings. If something needs attention, 
-                Chrome will help you fix it.
-              </FeatureDescription>
-              <FeatureLink href="#">
-                Learn more about safety on Chrome →
-              </FeatureLink>
-            </div>
-          </FeatureCard>
-
-          <FeatureCard
-            bgColor="white"
-            variants={scrollVariants.staggerItem}
-            whileHover={{ y: -8, transition: { duration: 0.3 } }}
-          >
-            <div>
-              <FeatureTitle>ENHANCED SAFE BROWSING</FeatureTitle>
-              <FeatureHeading>Browse with the confidence that you're staying safer online</FeatureHeading>
-              <FeatureDescription>
-                Enhanced Safe Browsing provides additional protection by sharing real-time data with 
-                Google Safe Browsing to help identify and warn you about dangerous sites, downloads, 
-                and extensions.
-              </FeatureDescription>
-              <FeatureLink href="#">
-                Learn more →
-              </FeatureLink>
-            </div>
-          </FeatureCard>
-
-          <FeatureCard
-            bgColor="#1a73e8"
-            variants={scrollVariants.staggerItem}
-            whileHover={{ y: -8, transition: { duration: 0.3 } }}
-          >
-            <div>
-              <FeatureTitle>PRIVACY GUIDE</FeatureTitle>
-              <FeatureHeading>Keep your privacy under your control with easy-to-use settings</FeatureHeading>
-              <FeatureDescription>
-                Chrome makes it easy to understand exactly what you're sharing online and who you're 
-                sharing it with. Simply use the Privacy Guide, a step-by-step tour of your privacy settings.
-              </FeatureDescription>
-              <GoogleLogo>G</GoogleLogo>
-            </div>
-          </FeatureCard>
+          {cardTexts.map((card, index) => (
+            <FeatureCard
+              key={index}
+              bgColor={index === 0 || index === 3 ? "#1a73e8" : "white"}
+              variants={scrollVariants.staggerItem}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+            >
+              <div>
+                <FeatureTitle bgColor={index === 0 || index === 3 ? "#1a73e8" : "white"}>{card.title}</FeatureTitle>
+                <FeatureHeading bgColor={index === 0 || index === 3 ? "#1a73e8" : "white"}>{card.heading}</FeatureHeading>
+                {card.description && <FeatureDescription bgColor={index === 0 || index === 3 ? "#1a73e8" : "white"}>{card.description}</FeatureDescription>}
+                {card.extraContent}
+                {card.status}
+              </div>
+              <PlusButton onClick={() => handlePlusClick(index)}>
+                {card.expanded ? '✕' : '+'}
+              </PlusButton>
+            </FeatureCard>
+          ))}
         </FeaturesGrid>
       </Container>
     </Section>

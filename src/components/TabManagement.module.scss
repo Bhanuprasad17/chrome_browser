@@ -19,18 +19,18 @@
 
 .featuresGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 3rem;
   margin-bottom: 4rem;
 }
 
 .featureCard {
   background: white;
-  padding: 2.5rem;
+  padding: 1rem;
   border-radius: 16px;
   position: relative;
   overflow: hidden;
-  min-height: 350px;
+  min-height: 608px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -87,6 +87,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  // height: 20rem;
+}
+
+.cardImage {
+  max-width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+  border-radius: 12px;
 }
 
 .browserWindow {

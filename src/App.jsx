@@ -124,11 +124,11 @@ function App() {
       </AnimatePresence>
       <Hero id="hero" />
       <HorizontalCarousel />
-      <Features id="features" />
-      <TabManagement id="tabs" />
+      {/* <Features id="features" /> */}
+      <TabManagement id="updates" />
       <Safety id="safety" />
       <Customization id="customization" />
-      <AIInnovations id="ai" />
+      {/* <AIInnovations id="ai" /> */}
       <GoogleBuilt id="google-built" />
       <FAQ id="faq" />
       <Footer />

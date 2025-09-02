@@ -143,13 +143,22 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
             </motion.a>
             <motion.a
               className="nav-link"
+              style={activeSection === 'updates' ? activeNavLinkStyles : navLinkStyles}
+              href="#updates"
+              onClick={(e) => handleNavClick(e, 'updates')}
+              variants={scrollVariants.staggerItem}
+            >
+              Updates
+            </motion.a>
+            {/* <motion.a
+              className="nav-link"
               style={activeSection === 'features' ? activeNavLinkStyles : navLinkStyles}
               href="#features"
               onClick={(e) => handleNavClick(e, 'features')}
               variants={scrollVariants.staggerItem}
             >
               Features
-            </motion.a>
+            </motion.a> */}
             <motion.a
               className="nav-link"
               style={activeSection === 'customization' ? activeNavLinkStyles : navLinkStyles}
@@ -157,7 +166,7 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
               onClick={(e) => handleNavClick(e, 'customization')}
               variants={scrollVariants.staggerItem}
             >
-              Customization
+              by Google
             </motion.a>
             <motion.a
               className="nav-link"
