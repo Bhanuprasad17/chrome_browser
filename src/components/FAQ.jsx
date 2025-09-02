@@ -70,7 +70,6 @@ const FAQQuestion = styled.button`
 const QuestionText = styled.span`
   flex: 1;
   margin-right: 1rem;
-  color: #1a73e8;
 `;
 
 const ExpandIcon = styled(motion.div)`
@@ -87,7 +86,7 @@ const ExpandIcon = styled(motion.div)`
 
 const FAQAnswer = styled(motion.div)`
   padding: 0 1.5rem 1.5rem;
-  // color: #1a73e8;   /* ✅ Changed to blue */
+  color: #5f6368;
   line-height: 1.6;
   font-size: 1rem;
   border-top: 1px solid #e8eaed;
@@ -191,4 +190,4 @@ const FAQ = ({ id }) => {
   );
 };
 
-export default FAQ;
+export default FAQ; 

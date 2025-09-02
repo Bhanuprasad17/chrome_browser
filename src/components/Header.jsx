@@ -2,10 +2,33 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../utils/useScrollAnimation';
 import { scrollVariants } from '../utils/scrollAnimations';
+import DownloadModal from './DownloadModal';
+import styles from './Header.module.scss';
+
+const DownloadIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path
+      d="M5 20h14v-2H5v2zm7-18v12m0 0l-4-4m4 4l4-4"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
 const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) => {
   const [ref, isVisible] = useScrollAnimation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen(prev => !prev);
@@ -96,22 +119,6 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
     color: isScrolled ? '#1a73e8' : 'white'
   };
 
-  const downloadButtonStyles = {
-    display: isScrolled ? 'none' : 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-    padding: '0.75rem 1.5rem',
-    backgroundColor: '#1a73e8',
-    color: 'white',
-    border: 'none',
-    borderRadius: '0.5rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    opacity: isScrolled ? 0 : 1,
-    transform: 'translateY(0) scale(1)'
-  };
-
   return (
     <>
       <motion.header
@@ -131,10 +138,10 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
             Chrome
           </motion.div>
           
-          <nav style={navigationStyles} className="navigation">
+          <nav style={navigationStyles} className={styles.navigation}>
             <motion.a
-              className="nav-link"
-              style={activeSection === 'safety' ? activeNavLinkStyles : navLinkStyles}
+              className={styles.navLink}
+              style={activeSection === 'safety' ? { ...activeNavLinkStyles } : { ...navLinkStyles }}
               href="#safety"
               onClick={(e) => handleNavClick(e, 'safety')}
               variants={scrollVariants.staggerItem}
@@ -142,17 +149,26 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
               Safety
             </motion.a>
             <motion.a
-              className="nav-link"
-              style={activeSection === 'updates' ? activeNavLinkStyles : navLinkStyles}
+              className={styles.navLink}
+              style={activeSection === 'updates' ? { ...activeNavLinkStyles } : { ...navLinkStyles }}
               href="#updates"
               onClick={(e) => handleNavClick(e, 'updates')}
               variants={scrollVariants.staggerItem}
             >
               Updates
             </motion.a>
+            <motion.a
+              className={styles.navLink}
+              style={activeSection === 'fast' ? { ...activeNavLinkStyles } : { ...navLinkStyles }}
+              href="#fast"
+              onClick={(e) => handleNavClick(e, 'fast')}
+              variants={scrollVariants.staggerItem}
+            >
+              Fast
+            </motion.a>
             {/* <motion.a
-              className="nav-link"
-              style={activeSection === 'features' ? activeNavLinkStyles : navLinkStyles}
+              className={styles.navLink}
+              style={activeSection === 'features' ? { ...activeNavLinkStyles } : { ...navLinkStyles }}
               href="#features"
               onClick={(e) => handleNavClick(e, 'features')}
               variants={scrollVariants.staggerItem}
@@ -160,8 +176,8 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
               Features
             </motion.a> */}
             <motion.a
-              className="nav-link"
-              style={activeSection === 'customization' ? activeNavLinkStyles : navLinkStyles}
+              className={styles.navLink}
+              style={activeSection === 'customization' ? { ...activeNavLinkStyles } : { ...navLinkStyles }}
               href="#customization"
               onClick={(e) => handleNavClick(e, 'customization')}
               variants={scrollVariants.staggerItem}
@@ -169,8 +185,8 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
               by Google
             </motion.a>
             <motion.a
-              className="nav-link"
-              style={activeSection === 'ai' ? activeNavLinkStyles : navLinkStyles}
+              className={styles.navLink}
+              style={activeSection === 'ai' ? { ...activeNavLinkStyles } : { ...navLinkStyles }}
               href="#ai"
               onClick={(e) => handleNavClick(e, 'ai')}
               variants={scrollVariants.staggerItem}
@@ -178,16 +194,17 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
               AI
             </motion.a>
             <motion.button
-              className="download-button"
-              style={downloadButtonStyles}
+              className={styles.downloadButton}
               variants={scrollVariants.staggerItem}
+              onClick={() => setIsModalOpen(true)}
             >
-              <span>⬇</span>
-              Download Chrome
+              <DownloadIcon />
+              Download
             </motion.button>
           </nav>
         </div>
       </motion.header>
+      {isModalOpen && <DownloadModal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 };

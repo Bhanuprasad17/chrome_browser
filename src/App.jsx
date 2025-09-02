@@ -12,6 +12,8 @@ import Customization from './components/Customization';
 import GoogleBuilt from './components/GoogleBuilt';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
+import QRToggle from './components/QRToggle';
+import ScalingCarousel from './components/ScalingCarousel';
 
 const AppContainer = styled.div`
   font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
@@ -69,7 +71,7 @@ function App() {
   // Update active section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'features', 'tabs', 'safety', 'customization', 'ai', 'google-built', 'faq'];
+      const sections = ['hero', 'fast', 'features', 'tabs', 'safety', 'customization', 'ai', 'google-built', 'faq'];
       const scrollPosition = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -91,7 +93,7 @@ function App() {
   // Debug: Log all available sections on mount
   useEffect(() => {
     console.log('App mounted, checking for sections...');
-    const sections = ['hero', 'features', 'tabs', 'safety', 'customization', 'ai', 'google-built', 'faq'];
+    const sections = ['hero', 'fast', 'features', 'tabs', 'safety', 'customization', 'ai', 'google-built', 'faq'];
     sections.forEach(id => {
       const element = document.getElementById(id);
       if (element) {
@@ -110,6 +112,7 @@ function App() {
         activeSection={activeSection}
         scrollToSection={scrollToSection}
       />
+      <QRToggle />
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -129,7 +132,8 @@ function App() {
       <Safety id="safety" />
       <Customization id="customization" />
       {/* <AIInnovations id="ai" /> */}
-      <GoogleBuilt id="google-built" />
+      {/* <GoogleBuilt id="google-built" /> */}
+      {/* <ScalingCarousel /> */}
       <FAQ id="faq" />
       <Footer />
     </AppContainer>
