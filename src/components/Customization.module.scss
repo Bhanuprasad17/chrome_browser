@@ -1,0 +1,315 @@
+// Variables
+$primary-color: #1a73e8;
+$primary-hover: #1557b0;
+$text-primary: #202124;
+$text-secondary: #5f6368;
+$bg-yellow: #fff4d6;
+$bg-white: white;
+$shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+$shadow-hover: 0 2px 4px rgba(26, 115, 232, 0.4);
+$border-radius: 8px;
+$border-radius-small: 4px;
+
+// Mixins
+@mixin card-base {
+  padding: 1.5rem;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 90vh;
+}
+
+@mixin hover-effect {
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+// Main styles
+.customizationSection {
+  padding: 4rem 2rem;
+  background: $bg-white;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $text-primary;
+  text-align: center;
+  margin-top: 0rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 1rem;
+  margin-top: 0rem;
+  margin-bottom: 2rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+  }
+}
+
+.topCard {
+  background-color: $bg-yellow;
+  padding: 2rem;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1.5rem;
+  grid-column: 1 / -1;
+  min-height: 500px;
+  @include hover-effect;
+  
+  @media (max-width: 768px) {
+    text-align: center;
+    align-items: center;
+  }
+}
+
+.topCardTextRow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.topCardLeft {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 3rem;
+  
+  @media (max-width: 768px) {
+    align-items: center;
+  }
+}
+
+.topCardRight {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 3rem;
+  
+  @media (max-width: 768px) {
+    align-items: center;
+  }
+}
+
+.topCardImageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+}
+
+.topCardImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: $border-radius-small;
+  object-fit: contain;
+  max-height: 500px;
+}
+
+.bottomCard {
+  @include card-base;
+  @include hover-effect;
+  width: 100%;
+
+  &Yellow {
+    background-color: $bg-yellow;
+  }
+
+  &White {
+    background-color: $bg-white;
+    border: 1px solid #e8eaed;
+    
+    &:hover .iconContainer:nth-child(2) .workspaceIcon {
+      transform: scale(1.2);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    height: 60vh;
+  }
+}
+
+.cardContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardText {
+  font-size: 0.875rem;
+  color: $text-secondary;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cardHeading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: $text-primary;
+  line-height: 1.3;
+}
+
+.cardDescription {
+  font-size: 0.875rem;
+  color: $text-secondary;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  line-height: 1.4;
+}
+
+.cardLink {
+  font-size: 0.875rem;
+  color: $primary-color;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: auto;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.bottomCardImage {
+  border-radius: $border-radius-small;
+  object-fit: contain;
+  width: 800px;
+  height: auto;
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.expandedContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.expandedText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  
+  .cardDescription {
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+}
+
+.workspaceIcons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex: 1;
+  margin: auto 0;
+  
+  @media (max-width: 768px) {
+    gap: 2rem;
+  }
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.workspaceIcon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  
+  @media (max-width: 768px) {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.driveIconContainer {
+  &:hover .driveIcon {
+    transform: scale(1.2);
+  }
+}
+
+.driveIcon {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  
+  &:hover {
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+  }
+}
+
+.plusButton {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: $primary-color;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-hover;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $primary-hover;
+    transform: scale(1.05);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.3);
+  }
+}

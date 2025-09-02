@@ -1,146 +1,8 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollAnimation } from '../utils/useScrollAnimation';
 import { scrollVariants } from '../utils/scrollAnimations';
-
-const Section = styled.section`
-  padding: 6rem 2rem;
-  background: white;
-`;
-
-const Container = styled.div`
-  max-width: 1300px;
-  margin: 0 auto;
-`;
-
-const SectionTitle = styled(motion.h2)`
-  font-size: clamp(2rem, 5vw, 2.5rem);
-  font-weight: 700;
-  color: #202124;
-  text-align: center;
-  margin-bottom: 3rem;
-  line-height: 1.2;
-`;
-
-const FeaturesGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1239px;
-  grid-template-rows: 260px 208px;
-  gap: 3rem 3rem 3rem 3rem;
-  margin-bottom: 4rem;
-  position: relative;
-  z-index: 0;
-
-  @media(min-width: 768px) {
-    grid-template-columns: 595px 595px;
-    grid-template-rows: 208px;
-    gap: 3rem 1.5rem;
-  }
-`;
-
-const TopCard = styled(motion.div)`
-  background-color: #fff4d6;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-  grid-column: 1 / -1;
-  width: 1239px;
-  height: 260px;
-`;
-
-const BottomCard = styled(motion.div)`
-  background-color: ${props => props.bgColor || 'white'};
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 595px;
-  height: 208px;
-`;
-
-const CardText = styled.div`
-  font-size: 0.9rem;
-  color: #202124;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-`;
-
-const CardHeading = styled.h3`
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-`;
-
-const CardDescription = styled.p`
-  font-size: 0.9rem;
-  color: #5f6368;
-  margin-bottom: 1rem;
-  flex-grow: 1;
-`;
-
-const CardLink = styled.a`
-  font-size: 0.9rem;
-  color: #1a73e8;
-  text-decoration: none;
-  font-weight: 500;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const CardImage = styled.img`
-  border-radius: 8px;
-  margin-top: auto;
-`;
-
-const TopCardImage = styled(CardImage)`
-  width: 350px;
-  height: auto;
-`;
-
-const BottomCardImage = styled(CardImage)`
-  width: 120px;
-  height: auto;
-`;
-
-const PlusButton = styled.button`
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  background-color: #1a73e8;
-  border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.6);
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #1557b0;
-  }
-`;
+import styles from './customization.module.scss';
 
 const Customization = ({ id }) => {
   const [ref, isVisible] = useScrollAnimation();
@@ -149,83 +11,302 @@ const Customization = ({ id }) => {
   const [bottomLeftExpanded, setBottomLeftExpanded] = useState(false);
   const [bottomRightExpanded, setBottomRightExpanded] = useState(false);
 
+  // Animation variants for content transitions
+  const contentVariants = {
+    collapsed: {
+      opacity: 0,
+      height: 0,
+      y: -20,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    },
+    expanded: {
+      opacity: 1,
+      height: "auto",
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  const imageVariants = {
+    hidden: {
+      opacity: 0,
+      scale: 0.9,
+      transition: {
+        duration: 0.3
+      }
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.3,
+        delay: 0.1
+      }
+    }
+  };
+
+  const textVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        delay: 0.2,
+        staggerChildren: 0.1
+      }
+    }
+  };
+
   return (
-    <Section id={id} ref={ref}>
-      <Container>
-        <SectionTitle
+    <section className={styles.customizationSection} id={id} ref={ref}>
+      <div className={styles.container}>
+        <motion.h2 
+          className={styles.sectionTitle}
           initial="hidden"
           animate={isVisible ? 'visible' : 'hidden'}
           variants={scrollVariants.staggerContainer}
         >
           by Google
-        </SectionTitle>
+        </motion.h2>
 
-        <FeaturesGrid
-          initial="hidden"
-          animate={isVisible ? 'visible' : 'hidden'}
-          variants={scrollVariants.staggerContainer}
-        >
-          <TopCard
+        <div className={styles.featuresGrid}>
+          {/* Top Card */}
+          <motion.div
+            className={styles.topCard}
+            initial="hidden"
+            animate={isVisible ? 'visible' : 'hidden'}
             variants={scrollVariants.staggerItem}
-            whileHover={{ y: -8, transition: { duration: 0.3 } }}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
           >
-            <div>
-              <CardText>Google AI</CardText>
-              <CardHeading>Access AI superpowers while you browse.</CardHeading>
-              <CardDescription>
-                Google is integrating artificial intelligence to make our products more useful. We use AI for features like Search, Google Translate, and more, and we're innovating new technologies responsibly.
-              </CardDescription>
-              <CardLink href="#">Explore Google AI &rarr;</CardLink>
+            <div className={styles.topCardTextRow}>
+              <div className={styles.topCardLeft}>
+                <div className={styles.cardText}>Google AI</div>
+                <h1 style={{fontWeight : 900}} className={styles.cardHeading}>
+                  Access AI superpowers while you browse.
+                </h1>
+                <a href="#" className={styles.cardLink}>Explore Google AI &rarr;</a>
+              </div>
+              <div className={styles.topCardRight}>
+                <p className={styles.cardDescription}>
+                  Google is integrating artificial intelligence to make our products more useful. We use AI for features like Search, Google Translate, and more, and we're innovating new technologies responsibly.
+                </p>
+              </div>
             </div>
-            <TopCardImage src="https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google AI" />
-          </TopCard>
+            <div className={styles.topCardImageContainer}>
+              <img 
+                className={styles.topCardImage} 
+                src="https://www.google.com/chrome/static/images/v2/gallery/ai_desktop-2x.webp" 
+                alt="Google AI Desktop" 
+              />
+            </div>
+          </motion.div>
 
-          <BottomCard
-            bgColor="#fff4d6"
+          {/* Bottom Left Card */}
+          <motion.div
+            className={`${styles.bottomCard} ${styles.bottomCardYellow}`}
+            initial="hidden"
+            animate={isVisible ? 'visible' : 'hidden'}
             variants={scrollVariants.staggerItem}
-            whileHover={{ y: -8, transition: { duration: 0.3 } }}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+            layout
           >
-            <div>
-              <CardText>Google Search</CardText>
-              <CardHeading>The search bar you love, built right in.</CardHeading>
-              {!bottomLeftExpanded && (
-                <BottomCardImage src="https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google Search" />
-              )}
-              {bottomLeftExpanded && (
-                <CardDescription>
-                  Search faster and smarter with Google Search integrated directly into your browser.
-                </CardDescription>
-              )}
+            <div className={styles.cardContent}>
+              <div className={styles.cardText}>Google Search</div>
+
+              <AnimatePresence mode="wait">
+                {!bottomLeftExpanded && (
+                  <motion.h3 
+                    key="search-heading"
+                    className={styles.cardHeading}
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    The search bar you love, built right in.
+                  </motion.h3>
+                )}
+              </AnimatePresence>
+
+              <AnimatePresence mode="wait">
+                {!bottomLeftExpanded ? (
+                  <motion.img 
+                    key="search-front"
+                    className={styles.bottomCardImage} 
+                    src="https://www.google.com/chrome/static/images/v2/gallery/search-front_desktop-2x.webp" 
+                    alt="Google Search"
+                    variants={imageVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                  />
+                ) : (
+                  <motion.div 
+                    key="search-expanded"
+                    className={styles.expandedContent}
+                    variants={contentVariants}
+                    initial="collapsed"
+                    animate="expanded"
+                    exit="collapsed"
+                    layout
+                  >
+                    <motion.img 
+                      className={styles.bottomCardImage} 
+                      src="https://www.google.com/chrome/static/images/v2/gallery/search-back.webp" 
+                      alt="Google Search Back"
+                      variants={imageVariants}
+                      initial="hidden"
+                      animate="visible"
+                    />
+                    <motion.div 
+                      className={styles.expandedText}
+                      variants={textVariants}
+                      initial="hidden"
+                      animate="visible"
+                    >
+                      <motion.p className={styles.cardDescription} variants={textVariants}>
+                        Access a world of knowledge at your fingertips. Check the weather, solve math equations, and get instant search results, all contained inside your browser's address bar.
+                      </motion.p>
+                      <motion.p className={styles.cardDescription} variants={textVariants}>
+                        Get suggestions as you type and find what you're looking for faster than ever before with Google's powerful search integration.
+                      </motion.p>
+                      <motion.p className={styles.cardDescription} variants={textVariants}>
+                        Your searches are secure and private, with Google's industry-leading protection keeping your data safe while you explore the web.
+                      </motion.p>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-            <PlusButton onClick={() => setBottomLeftExpanded(!bottomLeftExpanded)}>
+            <motion.button 
+              className={styles.plusButton}
+              onClick={() => setBottomLeftExpanded(!bottomLeftExpanded)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              animate={{ rotate: bottomLeftExpanded ? 45 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
               {bottomLeftExpanded ? '✕' : '+'}
-            </PlusButton>
-          </BottomCard>
+            </motion.button>
+          </motion.div>
 
-          <BottomCard
-            bgColor="white"
+          {/* Bottom Right Card */}
+          <motion.div
+            className={`${styles.bottomCard} ${styles.bottomCardWhite}`}
+            initial="hidden"
+            animate={isVisible ? 'visible' : 'hidden'}
             variants={scrollVariants.staggerItem}
-            whileHover={{ y: -8, transition: { duration: 0.3 } }}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+            layout
           >
-            <div>
-              <CardText>Google Workspace</CardText>
-              <CardHeading>Get things done, with or without Wi-Fi.</CardHeading>
-              {!bottomRightExpanded && (
-                <BottomCardImage src="https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google Workspace" />
-              )}
-              {bottomRightExpanded && (
-                <CardDescription>
-                  Access your emails, documents, and files anywhere, anytime with Google Workspace.
-                </CardDescription>
-              )}
+            <div className={styles.cardContent}>
+              <div className={styles.cardText}>Google Workspace</div>
+
+              <AnimatePresence mode="wait">
+                {!bottomRightExpanded && (
+                  <motion.h3 
+                    key="workspace-heading"
+                    className={styles.cardHeading}
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    Get things done, with or without Wi-Fi.
+                  </motion.h3>
+                )}
+              </AnimatePresence>
+
+              <AnimatePresence mode="wait">
+                {!bottomRightExpanded ? (
+                  <motion.div
+                    key="workspace-icons"
+                    className={styles.workspaceIcons}
+                    variants={imageVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                  >
+                    <div className={styles.iconContainer}>
+                      <img 
+                        className={styles.workspaceIcon} 
+                        src="https://www.google.com/chrome/static/images/v2/gallery/gmail.png" 
+                        alt="Gmail" 
+                      />
+                    </div>
+                    <div className={styles.iconContainer}>
+                      <img 
+                        className={styles.workspaceIcon} 
+                        src="https://www.google.com/chrome/static/images/v2/gallery/docs.png" 
+                        alt="Google Docs" 
+                      />
+                    </div>
+                    <div className={`${styles.iconContainer} ${styles.driveIconContainer}`}>
+                      <img 
+                        className={`${styles.workspaceIcon} ${styles.driveIcon}`} 
+                        src="https://www.google.com/chrome/static/images/v2/gallery/drive.png" 
+                        alt="Google Drive" 
+                      />
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    key="workspace-expanded"
+                    className={styles.expandedContent}
+                    variants={contentVariants}
+                    initial="collapsed"
+                    animate="expanded"
+                    exit="collapsed"
+                    layout
+                  >
+                    <motion.img 
+                      className={styles.bottomCardImage} 
+                      src="https://www.google.com/chrome/static/images/v2/gallery/offline.webp" 
+                      alt="Google Workspace Offline"
+                      variants={imageVariants}
+                      initial="hidden"
+                      animate="visible"
+                    />
+                    <motion.div 
+                      className={styles.expandedText}
+                      variants={textVariants}
+                      initial="hidden"
+                      animate="visible"
+                    >
+                      <motion.p className={styles.cardDescription} variants={textVariants}>
+                        Get things done in Gmail, Google Docs, Google Slides, Google Sheets, Google Translate and Google Drive, even without an Internet connection.
+                      </motion.p>
+                      <motion.p className={styles.cardDescription} variants={textVariants}>
+                        Work seamlessly across all your devices with automatic syncing when you reconnect to the internet.
+                      </motion.p>
+                      <motion.p className={styles.cardDescription} variants={textVariants}>
+                        Stay productive anywhere with offline access to your most important files and documents.
+                      </motion.p>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-            <PlusButton onClick={() => setBottomRightExpanded(!bottomRightExpanded)}>
+            <motion.button 
+              className={styles.plusButton}
+              onClick={() => setBottomRightExpanded(!bottomRightExpanded)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              animate={{ rotate: bottomRightExpanded ? 45 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
               {bottomRightExpanded ? '✕' : '+'}
-            </PlusButton>
-          </BottomCard>
-        </FeaturesGrid>
-      </Container>
-    </Section>
+            </motion.button>
+          </motion.div>
+        </div>
+      </div>
+    </section>
   );
 };
 
