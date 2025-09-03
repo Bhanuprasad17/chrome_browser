@@ -18,16 +18,40 @@ const ModalContainer = styled.div`
   background: white;
   border-radius: 12px;
   width: 400px;
-  padding: 2rem;
+  padding: 2rem 2rem 3rem 2rem;
   box-shadow: 0 8px 24px rgba(0,0,0,0.2);
   position: relative;
   font-family: 'Google Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+`;
+
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const LogoImage = styled.img`
+  width: 24px;
+  height: 24px;
+`;
+
+const LogoText = styled.span`
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #202124;
+  text-transform: lowercase;
 `;
 
 const CloseButton = styled.button`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
   background: #e8f0fe;
   border: none;
   border-radius: 50%;
@@ -39,28 +63,20 @@ const CloseButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const Logo = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
-  background: linear-gradient(45deg, #4285f4, #34a853, #fbbc05, #ea4335);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 1rem;
+  line-height: 1;
 `;
 
 const Title = styled.h2`
   font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.25rem 0;
   color: #202124;
 `;
 
 const Subtitle = styled.p`
   font-size: 1rem;
   color: #5f6368;
-  margin-bottom: 1rem;
+  margin: 0 0 1.5rem 0;
 `;
 
 const CheckboxLabel = styled.label`
@@ -69,7 +85,7 @@ const CheckboxLabel = styled.label`
   gap: 0.5rem;
   font-size: 0.9rem;
   color: #202124;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   cursor: pointer;
 `;
 
@@ -81,8 +97,8 @@ const Checkbox = styled.input`
 
 const Links = styled.div`
   font-size: 0.85rem;
-  color: #1a73e8;
-  margin-bottom: 1.5rem;
+  color: #5f6368;
+  margin-bottom: 2rem;
 
   a {
     color: #1a73e8;
@@ -115,8 +131,16 @@ const DownloadModal = ({ onClose }) => {
   return (
     <Overlay onClick={onClose}>
       <ModalContainer onClick={e => e.stopPropagation()}>
-        <CloseButton onClick={onClose} aria-label="Close modal">&times;</CloseButton>
-        <Logo>chrome</Logo>
+        <Header>
+          <LogoContainer>
+            <LogoImage
+              src="https://www.google.com/chrome/static/images/chrome-logo-m100.svg"
+              alt="Chrome Logo"
+            />
+            <LogoText>chrome</LogoText>
+          </LogoContainer>
+          <CloseButton onClick={onClose} aria-label="Close modal">&times;</CloseButton>
+        </Header>
         <Title>Get Chrome for Windows</Title>
         <Subtitle>For Windows 11/10 64-bit</Subtitle>
         <CheckboxLabel>

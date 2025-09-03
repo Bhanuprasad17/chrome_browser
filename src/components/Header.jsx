@@ -134,7 +134,11 @@ const Header = ({ isMenuOpen, setIsMenuOpen, activeSection, scrollToSection }) =
             onClick={handleLogoClick}
             variants={scrollVariants.staggerItem}
           >
-            <span style={{ fontSize: '1.2rem' }}>🌐</span>
+            <img
+              src="https://www.google.com/chrome/static/images/chrome-logo-m100.svg"
+              alt="Chrome Logo"
+              style={{ width: '24px', height: '24px', marginRight: '8px' }}
+            />
             Chrome
           </motion.div>
           
