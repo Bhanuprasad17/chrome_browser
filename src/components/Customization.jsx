@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollAnimation } from '../utils/useScrollAnimation';
 import { scrollVariants } from '../utils/scrollAnimations';
-import styles from './customization.module.scss';
+import styles from './Customization.module.scss';
 
 const Customization = ({ id }) => {
   const [ref, isVisible] = useScrollAnimation();
