@@ -58,52 +58,52 @@ const ChromeExtensionsShowcase = () => {
     {
       id: 1,
       src: 'https://www.google.com/chrome/static/images/dev-components/extensions-paint-2x.png',
-      baseX: -120,
-      baseY: -80,
-      edgeX: -60,
-      edgeY: -40,
-      amplitude: { x: 8, y: 6 },
-      speed: { x: 0.8, y: 1.2 },
-      color: '#4285f4',
-      bgColor: '#34d399', // stronger green background
+      baseX: -180,
+      baseY: -120,
+      edgeX: -90,
+      edgeY: -60,
+      amplitude: { x: 1, y: 9 },
+      speed: { x: 1.2, y: 1.8 },
+      // color: '#4285f4',
+      bgColor: 'green', // stronger green background
       name: 'Productivity'
     },
     {
       id: 2,
       src: 'https://www.google.com/chrome/static/images/dev-components/extensions-person-2x.png',
-      baseX: 140,
-      baseY: -60,
-      edgeX: 70,
-      edgeY: -30,
-      amplitude: { x: 10, y: 8 },
-      speed: { x: 1.1, y: 0.9 },
-      color: '#34a853',
-      bgColor: '#fbbf24', // stronger yellow background
+      baseX: 210,
+      baseY: -90,
+      edgeX: 105,
+      edgeY: -45,
+      amplitude: { x: 15, y: 12 },
+      speed: { x: 1.65, y: 1.35 },
+      // color: '#34a853',
+      bgColor: 'yellow-orange', // stronger yellow background
       name: 'Shopping'
     },
     {
       id: 3,
       src: 'https://www.google.com/chrome/static/images/dev-components/extensions-person-2x.png',
-      baseX: -140,
-      baseY: 80,
-      edgeX: -70,
-      edgeY: 40,
-      amplitude: { x: 12, y: 5 },
-      speed: { x: 0.7, y: 1.4 },
-      color: '#fbbc04',
-      bgColor: '#f59e0b', // stronger amber background
+      baseX: -210,
+      baseY: 120,
+      edgeX: -105,
+      edgeY: 60,
+      amplitude: { x: 18, y: 7.5 },
+      speed: { x: 1.05, y: 2.1 },
+      // color: '#fbbc04',
+      bgColor: '#f09802ff', // stronger amber background
       name: 'Entertainment'
     },
     {
       id: 4,
       src: 'https://www.google.com/chrome/static/images/dev-components/extensions-shop-2x.png',
-      baseX: 120,
-      baseY: 100,
-      edgeX: 60,
-      edgeY: 50,
-      amplitude: { x: 7, y: 9 },
-      speed: { x: 1.3, y: 0.8 },
-      color: '#ea4335',
+      baseX: 180,
+      baseY: 150,
+      edgeX: 90,
+      edgeY: 75,
+      amplitude: { x: 10.5, y: 13.5 },
+      speed: { x: 1.95, y: 1.2 },
+      color: 'red',
       bgColor: '#f87171', // stronger red background
       name: 'Developer'
     },
@@ -111,13 +111,13 @@ const ChromeExtensionsShowcase = () => {
       id: 5,
       src: 'https://www.google.com/chrome/static/images/dev-components/extensions-icon-2x.png',
       baseX: 0,
-      baseY: 140,
+      baseY: 210,
       edgeX: 0,
-      edgeY: 70,
-      amplitude: { x: 9, y: 11 },
-      speed: { x: 0.9, y: 1.1 },
+      edgeY: 105,
+      amplitude: { x: 13.5, y: 16.5 },
+      speed: { x: 1.35, y: 1.65 },
       color: '#9aa0a6',
-      bgColor: '#6366f1', // stronger indigo background
+      bgColor: 'blue', // stronger indigo background
       name: 'Utilities'
     }
   ];
@@ -134,6 +134,7 @@ const ChromeExtensionsShowcase = () => {
 
     const scale = 1 - scrollProgress * 0.3;
     const opacity = 1 - scrollProgress * 0.4;
+
     const translateZ = Math.sin(time * icon.speed.x + icon.id) * 5 + 20;
 
     return {
@@ -154,23 +155,22 @@ const ChromeExtensionsShowcase = () => {
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
       <div style={{
-        maxWidth: '84rem',
+        maxWidth: '70rem',
         width: '100%',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '4rem',
-        flexWrap: 'wrap'
+        justifyContent: 'center',
+        gap: '20px'
       }}>
         {/* Left Content */}
         <div style={{
           flex: 1,
-          maxWidth: '32rem',
+          maxWidth: '38rem',
           minWidth: '300px'
         }}>
           <h1 style={{
             fontSize: '3.75rem',
-            fontWeight: 300,
+            fontWeight: 700,
             lineHeight: 1.25,
             color: '#111827',
             margin: 0
@@ -223,16 +223,16 @@ const ChromeExtensionsShowcase = () => {
         </div>
 
         {/* Right Visual */}
-        <div 
-          id="showcase-container" 
+        <div
+          id="showcase-container"
           style={{
             flex: 1,
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '37.5rem',
-            minWidth: '400px'
+            // height: '37.5rem',
+            // minWidth: '400px'
           }}
         >
           {/* Main Chrome Browser Window */}
@@ -248,7 +248,7 @@ const ChromeExtensionsShowcase = () => {
             overflow: 'hidden',
             transform: `perspective(1000px) rotateY(${mousePosition.x * 0.3}deg) rotateX(${mousePosition.y * -0.2}deg) translateZ(10px)`
           }}>
-            {/* Browser Header */}          
+            {/* Browser Header */}
             <div style={{
               backgroundColor: '#f3f4f6',
               padding: '0.75rem 1rem',
@@ -269,7 +269,7 @@ const ChromeExtensionsShowcase = () => {
                   borderRadius: '9999px',
                   padding: '0.375rem 1rem',
                   fontSize: '0.875rem',
-                  color: '#6b7280',
+                  color: '#7f8da9ff',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.5rem'
@@ -281,11 +281,12 @@ const ChromeExtensionsShowcase = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Browser Content */}
                 <div style={{
                   height: 'calc(100% - 60px)',
-                  background: `url('https://www.google.com/chrome/static/images/dev-components/chrome-gallery-5-2x.webp') center/cover no-repeat, linear-gradient(135deg, #eff6ff, #f5f3ff)`,
+                  // width : '100%',
+                  background: `url('https://www.google.com/chrome/static/images/dev-components/chrome-gallery-5-2x.webp') center/cover no-repeat`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -295,7 +296,7 @@ const ChromeExtensionsShowcase = () => {
                     {/* Text removed as per user request */}
                     <div style={{
                       display: 'grid',
-                      gridTemplateColumns: 'repeat(3, 1fr)',
+                      gridTemplateColumns: 'repeat(3, 2fr)',
                       gap: '1rem'
                     }}>
                     </div>
@@ -307,7 +308,7 @@ const ChromeExtensionsShowcase = () => {
           {floatingIcons.map((icon) => {
             const position = calculateIconPosition(icon);
             return (
-              <div 
+              <div
                 key={icon.id}
                 style={{
                   position: 'absolute',
@@ -336,12 +337,12 @@ const ChromeExtensionsShowcase = () => {
                   border: `1px solid ${icon.color}60`,
                   position: 'relative'
                 }}>
-                  <img 
+                  <img
                     src={icon.src}
                     alt={`${icon.name} Extension`}
                     style={{
-                      width: '3rem',
-                      height: '3rem',
+                      width: '140%',
+                      height: '160%',
                       objectFit: 'contain',
                       display: 'block'
                     }}
@@ -372,9 +373,9 @@ const ChromeExtensionsShowcase = () => {
                     }}
                   />
                 </div>
-                
+
                 {/* Glow effect */}
-                <div style={{
+                {/* <div style={{
                   position: 'absolute',
                   inset: 0,
                   borderRadius: '1rem',
@@ -383,7 +384,7 @@ const ChromeExtensionsShowcase = () => {
                   transform: 'scale(1.1)',
                   opacity: Math.max(0, (1 - scrollProgress * 0.6) * 0.2),
                   pointerEvents: 'none'
-                }}></div>
+                }}></div> */}
               </div>
             );
           })}
@@ -404,7 +405,7 @@ const ChromeExtensionsShowcase = () => {
               borderRadius: '50%',
               filter: 'blur(2rem)',
               opacity: 0.2,
-              backgroundColor: '#93c5fd',
+              // backgroundColor: '#93c5fd',
               animation: 'pulse 4s infinite ease-in-out'
             }}></div>
             <div style={{
@@ -416,7 +417,7 @@ const ChromeExtensionsShowcase = () => {
               borderRadius: '50%',
               filter: 'blur(2rem)',
               opacity: 0.2,
-              backgroundColor: '#c4b5fd',
+              // backgroundColor: '#c4b5fd',
               animation: 'pulse 4s infinite ease-in-out',
               animationDelay: '1s'
             }}></div>
@@ -429,7 +430,7 @@ const ChromeExtensionsShowcase = () => {
               borderRadius: '50%',
               filter: 'blur(2rem)',
               opacity: 0.2,
-              backgroundColor: '#a7f3d0',
+              // backgroundColor: '#a7f3d0',
               animation: 'pulse 4s infinite ease-in-out',
               animationDelay: '2s'
             }}></div>
@@ -442,12 +443,13 @@ const ChromeExtensionsShowcase = () => {
               borderRadius: '50%',
               filter: 'blur(2rem)',
               opacity: 0.2,
-              backgroundColor: '#fde68a',
+              // backgroundColor: '#fde68a',
               animation: 'pulse 4s infinite ease-in-out',
               animationDelay: '3s'
             }}></div>
           </div>
         </div>
+        
       </div>
       
       {/* Add pulse animation */}

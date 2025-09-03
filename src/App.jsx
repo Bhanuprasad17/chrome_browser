@@ -131,10 +131,10 @@ function App() {
       <HorizontalCarousel />
       {/* <Features id="features" /> */}
       <TabManagement id="updates" />
+      <ChromeExtensionsShowcase />
       {/* <CurtainScroll imageSrc="https://www.google.com/chrome/static/images/dev-components/chrome-gallery-1-2x.webp" /> */}
       <Safety id="safety" />
       <Customization id="customization" />
-      <ChromeExtensionsShowcase />
       {/* <AIInnovations id="ai" /> */}
       {/* <GoogleBuilt id="google-built" /> */}
       {/* <ScalingCarousel /> */}
