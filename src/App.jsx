@@ -14,6 +14,8 @@ import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import QRToggle from './components/QRToggle';
 import ScalingCarousel from './components/ScalingCarousel';
+import CurtainScroll from './components/CurtainScroll';
+import ChromeExtensionsShowcase from './components/ChromeExtensionsShowcase';
 
 const AppContainer = styled.div`
   font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
@@ -129,8 +131,10 @@ function App() {
       <HorizontalCarousel />
       {/* <Features id="features" /> */}
       <TabManagement id="updates" />
+      {/* <CurtainScroll imageSrc="https://www.google.com/chrome/static/images/dev-components/chrome-gallery-1-2x.webp" /> */}
       <Safety id="safety" />
       <Customization id="customization" />
+      <ChromeExtensionsShowcase />
       {/* <AIInnovations id="ai" /> */}
       {/* <GoogleBuilt id="google-built" /> */}
       {/* <ScalingCarousel /> */}
